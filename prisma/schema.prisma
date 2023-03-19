@@ -1,0 +1,45 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+
+model TaskSession {
+  id           Int          @id @default(autoincrement())
+  startedAt    DateTime
+  label        String
+  endedAt      DateTime?
+  daySessionId Int?
+  daySession   DaySession?  @relation("day_session_to_task_session", fields: [daySessionId], references: [id])
+}
+
+
+model Pause {
+  id        Int     @id @default(autoincrement())
+  startedAt DateTime
+  endedAt   DateTime?
+  daySessionId Int?
+  daySession   DaySession?  @relation("day_session_to_pause", fields: [daySessionId], references: [id])
+}
+
+model DaySession {
+  id        Int           @id @default(autoincrement())
+  startedAt DateTime
+  endedAt   DateTime?
+  tasks     TaskSession[] @relation("day_session_to_task_session")
+  pauses    Pause[]      @relation("day_session_to_pause")
+  userId    Int?
+  user      UserApp?     @relation("user_app_to_day_session", fields: [userId], references: [id])
+}
+
+model UserApp {
+  id       Int        @id @default(autoincrement())
+  name     String
+  email    String     @unique
+  taches   String[]
+  sessions DaySession[] @relation("user_app_to_day_session")
+}

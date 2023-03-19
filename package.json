@@ -1,0 +1,43 @@
+{
+  "private": true,
+  "description": "Application for get work time powered by next.js next-auth-example for begin template",
+  "repository": "https://github.com/nextauthjs/next-auth-example.git",
+  "bugs": {
+    "url": "https://github.com/nextauthjs/next-auth/issues"
+  },
+  "homepage": "https://next-auth-example.vercel.app",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Iain Collins <me@iaincollins.com>",
+  "contributors": [
+    "Balázs Orbán <info@balazsorban.com>",
+    "Nico Domino <yo@ndo.dev>",
+    "Lluis Agusti <hi@llu.lu>"
+  ],
+  "dependencies": {
+    "@prisma/client": "^4.11.0",
+    "@supabase/supabase-js": "^2.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "date-fns": "^2.29.3",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.7.0",
+    "next": "latest",
+    "next-auth": "latest",
+    "nodemailer": "^6",
+    "prettier": "^2.8.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17",
+    "@types/react": "^18.0.15",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "prisma": "^4.11.0",
+    "tailwindcss": "^3.2.7",
+    "typescript": "^4"
+  }
+}

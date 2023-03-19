@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "TaskSession" (
     "id" SERIAL NOT NULL,
-    "startedAt" INTEGER NOT NULL,
+    "startedAt" TIMESTAMP(3) NOT NULL,
     "label" TEXT NOT NULL,
-    "endedAt" INTEGER,
+    "endedAt" TIMESTAMP(3),
     "daySessionId" INTEGER,
 
     CONSTRAINT "TaskSession_pkey" PRIMARY KEY ("id")
@@ -12,8 +12,8 @@ CREATE TABLE "TaskSession" (
 -- CreateTable
 CREATE TABLE "Pause" (
     "id" SERIAL NOT NULL,
-    "startedAt" INTEGER NOT NULL,
-    "endedAt" INTEGER,
+    "startedAt" TIMESTAMP(3) NOT NULL,
+    "endedAt" TIMESTAMP(3),
     "daySessionId" INTEGER,
 
     CONSTRAINT "Pause_pkey" PRIMARY KEY ("id")
@@ -22,9 +22,8 @@ CREATE TABLE "Pause" (
 -- CreateTable
 CREATE TABLE "DaySession" (
     "id" SERIAL NOT NULL,
-    "startedAt" INTEGER NOT NULL,
-    "day" TIMESTAMP(3) NOT NULL,
-    "endedAt" INTEGER,
+    "startedAt" TIMESTAMP(3) NOT NULL,
+    "endedAt" TIMESTAMP(3),
     "userId" INTEGER,
 
     CONSTRAINT "DaySession_pkey" PRIMARY KEY ("id")

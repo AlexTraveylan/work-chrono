@@ -1,13 +1,14 @@
-import { DaySession } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import AccessDenied from '../components/access-denied'
+import { AffResume } from '../components/aff-resume'
 import Layout from '../components/layout'
+import { DaySessionBdd } from '../testdata/models/DaySessionBdd'
 
 export default function WeekReview() {
   const { data: session } = useSession()
-  const [daySessionData, setDAySessionData] = useState<DaySession[]>()
+  const [daySessionData, setDAySessionData] = useState<DaySessionBdd[]>()
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(`/api/reviews/weekReview`)
@@ -32,20 +33,18 @@ export default function WeekReview() {
   return (
     <Layout>
       <Link href="protected">Retour</Link>
-      <h1>On week-review</h1>
-      {daySessionData &&
-        daySessionData.map((daySession) => (
-          <div key={daySession.id}>
-            <span>{daySession.id}</span>
-            <span>{new Date(daySession.startedAt).toISOString()}</span>
-            <span>
-              {daySession.endedAt
-                ? new Date(daySession.endedAt).toISOString()
-                : 'N/A'}
-            </span>
-            <span>{daySession.userId}</span>
-          </div>
-        ))}
+      <h1 className="text-5xl font-bold m-3">Resumé</h1>
+      <div className="flex flex-row gap-3 flex-wrap">
+        {daySessionData &&
+          daySessionData.map((daySession) => (
+            <div key={daySession.id}>
+              <AffResume
+                startedAt={daySession.startedAt}
+                endedAt={daySession.endedAt}
+              />
+            </div>
+          ))}
+      </div>
     </Layout>
   )
 }

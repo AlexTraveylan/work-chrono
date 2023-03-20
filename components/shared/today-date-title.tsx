@@ -1,17 +1,9 @@
 // TodayDateTitle est un composant React qui affiche la date du jour
+
+import { days } from './format'
+
 // formatée avec le nom du jour de la semaine, le numéro du jour, le mois et l'année.
 export function TodayDateTitle() {
-  // Un tableau des jours de la semaine en français
-  const days = [
-    'Dimanche',
-    'Lundi',
-    'Mardi',
-    'Mercredi',
-    'Jeudi',
-    'Vendredi',
-    'Samedi',
-  ]
-
   // Obtenir la date actuelle
   const now = new Date()
   // Obtenir le nom du jour de la semaine à partir du tableau des jours

@@ -28,7 +28,6 @@ export default function ProtectedPage() {
   // If session exists, display content
   return (
     <Layout>
-      <Link href="/">Retour</Link>
       <div className="m-3">
         <TodayDateTitle />
       </div>

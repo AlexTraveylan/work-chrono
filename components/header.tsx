@@ -37,7 +37,7 @@ export default function Header() {
             <Link className="min-w-[20%]" href="/">
               <h3>Logo</h3>
             </Link>
-            <div className="flex flex-col items-center">
+            <div className="hidden flex-col items-center sm:flex">
               <p>Connecté en tant que :</p>
               <p className="font-bold">
                 {session.user.name ?? session.user.email}
@@ -56,31 +56,6 @@ export default function Header() {
           </div>
         </>
       )}
-      {/* <nav>
-        <ul className="">
-          <li className="">
-            <Link href="/">Home</Link>
-          </li>
-          <li className="">
-            <Link href="/client">Client</Link>
-          </li>
-          <li className="">
-            <Link href="/server">Server</Link>
-          </li>
-          <li className="">
-            <Link href="/protected">Protected</Link>
-          </li>
-          <li className="">
-            <Link href="/api-example">API</Link>
-          </li>
-          <li className="">
-            <Link href="/admin">Admin</Link>
-          </li>
-          <li className="">
-            <Link href="/me">Me</Link>
-          </li>
-        </ul>
-      </nav> */}
     </header>
   )
 }

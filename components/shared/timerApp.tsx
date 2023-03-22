@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FakeTimer } from '../../testdata/models/FakeTimer'
+import { formatOneorTwoDigitOnToTwoDigits } from './format'
 
 export function TimerApp({
   title,
@@ -43,21 +44,21 @@ export function TimerApp({
 
   return (
     <>
-      {BeginTimeStamp && (
+      {BeginTimeStamp && timer && (
         <div className="p-3 rounded-md shadow-md">
           <h3 className="font-bold mb-3 text-center">{title}</h3>
           <div className="flex flex-row gap-3">
             <div className="flex flex-col items-center justify-center bg-cyan-200 p-2 min-w-[5rem] rounded shadow-md">
               <h5 className="font-bold">Heures</h5>
-              <p>{timer?.hours}</p>
+              <p>{formatOneorTwoDigitOnToTwoDigits(timer.hours)}</p>
             </div>
             <div className="flex flex-col items-center justify-center bg-cyan-200 p-2 min-w-[5rem] rounded shadow-md">
               <h5 className="font-bold">Minutes</h5>
-              <p>{timer?.minutes}</p>
+              <p>{formatOneorTwoDigitOnToTwoDigits(timer.minutes)}</p>
             </div>
             <div className="flex flex-col items-center justify-center bg-cyan-200 p-2 min-w-[5rem] rounded shadow-md">
               <h5 className="font-bold">Secondes</h5>
-              <p>{timer?.secondes}</p>
+              <p>{formatOneorTwoDigitOnToTwoDigits(timer.secondes)}</p>
             </div>
           </div>
         </div>

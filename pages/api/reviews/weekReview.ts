@@ -3,8 +3,6 @@ import { authOptions } from '../auth/[...nextauth]'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { DaySessionService } from '../../../prisma/services/day-session-service'
-import { PauseService } from '../../../prisma/services/pause-service'
-import { TaskSessionService } from '../../../prisma/services/task-session-service'
 import { UserAppService } from '../../../prisma/services/user-app-service'
 
 export default async function handler(
@@ -13,8 +11,6 @@ export default async function handler(
 ) {
   const session = await getServerSession(req, res, authOptions)
   const dService = new DaySessionService()
-  const tService = new TaskSessionService()
-  const pService = new PauseService()
   const uService = new UserAppService()
 
   if (session?.user?.email) {

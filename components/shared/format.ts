@@ -17,3 +17,53 @@ export const days = [
   'Vendredi',
   'Samedi',
 ]
+
+export function get_7h_from_timeStamp(timestamp: number) {
+  const date = new Date(timestamp)
+
+  const date7h = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    7,
+    0,
+    0
+  )
+  return date7h.getTime()
+}
+
+export function get_20h_from_timeStamp(timestamp: number) {
+  const date = new Date(timestamp)
+
+  const date20h = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    20,
+    0,
+    0
+  )
+  return date20h.getTime()
+}
+
+export function get_height_from(startedAt: number, endedAt: number) {
+  const max_size =
+    get_20h_from_timeStamp(startedAt) - get_7h_from_timeStamp(startedAt)
+
+  return Math.floor(
+    (100 * (new Date(endedAt).getTime() - new Date(startedAt).getTime())) /
+      max_size
+  )
+}
+
+export function get_top_from_startedAt(startedAt: number) {
+  const max_size =
+    get_20h_from_timeStamp(startedAt) - get_7h_from_timeStamp(startedAt)
+
+  return Math.floor(
+    100 *
+      ((new Date(startedAt).getTime() -
+        get_7h_from_timeStamp(new Date(startedAt).getTime())) /
+        max_size)
+  )
+}

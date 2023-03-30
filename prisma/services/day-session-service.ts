@@ -1,5 +1,5 @@
 import { DaySession } from '@prisma/client'
-import { isToday } from 'date-fns'
+import { endOfWeek, isToday, startOfWeek, sub } from 'date-fns'
 import { prisma } from './prisma-client'
 
 export class DaySessionService {
@@ -56,6 +56,32 @@ export class DaySessionService {
         userId,
       },
     })
+    return daySessions
+  }
+
+  async getAllDaySessionsForUserFor_n_previousWeek(userId: number, n: number) {
+    const currentDate = new Date()
+    const startOfTargetWeek = startOfWeek(sub(currentDate, { weeks: n }), {
+      weekStartsOn: 1,
+    })
+    const endOfTargetWeek = endOfWeek(sub(currentDate, { weeks: n }), {
+      weekStartsOn: 1,
+    })
+
+    const daySessions = await prisma.daySession.findMany({
+      where: {
+        userId,
+        startedAt: {
+          gte: startOfTargetWeek,
+          lt: endOfTargetWeek,
+        },
+        endedAt: {
+          not: null,
+          lte: endOfTargetWeek,
+        },
+      },
+    })
+
     return daySessions
   }
 

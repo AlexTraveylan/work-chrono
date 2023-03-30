@@ -48,7 +48,12 @@ export default function ProtectedPage() {
             setBeginSession={setBeginSession}
           />
         </div>
-        <Link href="/week-review">Résumé de la semaine</Link>
+        <div className="flex flex-col gap-3 items-center my-3">
+          <Link href="/week-review">Résumé de la semaine</Link>
+          <Link href="/previous-week-review">
+            Résumé de la semaine précédente
+          </Link>
+        </div>
       </div>
       {!isPause && (
         <>

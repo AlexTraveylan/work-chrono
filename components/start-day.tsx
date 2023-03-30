@@ -35,11 +35,18 @@ export function StartDay({
   async function endWork() {
     if (beginSession) {
       try {
-        const response = await fetch(`/api/work/end`)
-        if (response.ok) {
+        const response0 = await fetch(`/api/work/end`)
+        if (response0.ok) {
           // Posibilité de recuperer endedAt ici
-
           setBeginSession(undefined)
+          const response1 = await fetch(`/api/work/saveTask`)
+          if (response1.ok) {
+            setTaskTimer(undefined)
+          }
+          const response2 = await fetch(`/api/work/savePause`)
+          if (response2.ok) {
+            setIsPause(false)
+          }
         }
       } catch (error) {
         // handle error

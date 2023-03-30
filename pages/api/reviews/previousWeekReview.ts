@@ -19,7 +19,7 @@ export default async function handler(
       const daysLogged =
         await dService.getAllDaySessionsForUserFor_n_previousWeek(
           currentUser.id,
-          0
+          1
         )
       return res.status(200).json(daysLogged)
     } else {

@@ -26,19 +26,25 @@ export default async function handler(
     // Vérification si une DaySession existe
     if (currentDaySesion?.id) {
       // Récupération de la dernière pause non terminée
-      const currentPause = await pService.getLastUnendedPauseByDaySessionId(
-        currentDaySesion.id
-      )
+      try {
+        const currentPause = await pService.getLastUnendedPauseByDaySessionId(
+          currentDaySesion.id
+        )
 
-      // Vérification si une pause existe
-      if (currentPause) {
-        // Mise à jour de la pause avec la date et l'heure actuelles
-        await pService.updatePause({ ...currentPause, endedAt: new Date() })
-        // Envoi de la réponse avec succès
-        return res.status(200).json({ message: 'Pause sauvegardée' })
-      } else {
-        // Envoi de la réponse d'erreur si aucune pause n'est trouvée
-        return res.status(400).json({ error: 'Pause non trouvée' })
+        // Vérification si une pause existe
+        if (currentPause) {
+          let message2 = 'Pas de pauses non terminés à supprimer'
+          // Mise à jour de la pause avec la date et l'heure actuelles
+          await pService.updatePause({ ...currentPause, endedAt: new Date() })
+
+          // Envoi de la réponse avec succès
+          return res.status(200).json({ message: 'Pause sauvegardée' })
+        } else {
+          // Envoi de la réponse d'erreur si aucune pause n'est trouvée
+          return res.status(200).json({ error: 'Aucune pause trouvée' })
+        }
+      } catch {
+        return res.status(200).json({ error: 'Aucune pause en cours' })
       }
     } else {
       // Envoi de la réponse d'erreur si aucune DaySession n'est trouvée

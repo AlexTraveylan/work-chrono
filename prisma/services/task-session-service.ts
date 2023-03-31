@@ -88,6 +88,39 @@ export class TaskSessionService {
     return deletedTaskSessions
   }
 
+  async deleteAllNullEndedTaskSessionsByEmail(userEmail: string) {
+    const user = await prisma.userApp.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    if (!user) {
+      throw new Error(`No user found with email: ${userEmail}`)
+    }
+
+    const deletedTaskSessions = await prisma.taskSession.deleteMany({
+      where: {
+        OR: [
+          {
+            daySession: {
+              userId: user.id,
+            },
+            endedAt: null,
+          },
+          {
+            daySessionId: null,
+          },
+        ],
+      },
+    })
+
+    return deletedTaskSessions
+  }
+
   async getLastUnendedTaskByDaySessionId(
     daySessionId: number
   ): Promise<TaskSession> {

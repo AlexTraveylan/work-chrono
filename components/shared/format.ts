@@ -1,3 +1,5 @@
+import { FakeHour } from '../../testdata/models/FakeDate'
+
 export function formatOneorTwoDigitOnToTwoDigits(thingToFormat: number) {
   if (thingToFormat < 10) {
     return `0${thingToFormat}`
@@ -17,6 +19,17 @@ export const days = [
   'Vendredi',
   'Samedi',
 ]
+
+export function get_hour_minute_from_timeStamp(timestamp: number): FakeHour {
+  const date = new Date(timestamp)
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+
+  return {
+    hour: hour,
+    minute: minute,
+  }
+}
 
 export function get_7h_from_timeStamp(timestamp: number) {
   const date = new Date(timestamp)

@@ -75,4 +75,37 @@ export class PauseService {
     })
     return pauses
   }
+
+  async deleteAllNullEndedPausesByEmail(userEmail: string) {
+    const user = await prisma.userApp.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    if (!user) {
+      throw new Error(`No user found with email: ${userEmail}`)
+    }
+
+    const deletedPauses = await prisma.pause.deleteMany({
+      where: {
+        OR: [
+          {
+            daySession: {
+              userId: user.id,
+            },
+            endedAt: null,
+          },
+          {
+            daySessionId: null,
+          },
+        ],
+      },
+    })
+
+    return deletedPauses
+  }
 }

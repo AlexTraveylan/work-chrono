@@ -42,10 +42,12 @@ export function StartDay({
           const response1 = await fetch(`/api/work/saveTask`)
           if (response1.ok) {
             setTaskTimer(undefined)
-          }
-          const response2 = await fetch(`/api/work/savePause`)
-          if (response2.ok) {
-            setIsPause(false)
+
+            const response2 = await fetch(`/api/work/savePause`)
+            if (response2.ok) {
+              setIsPause(false)
+              await fetch(`/api/work/purge`)
+            }
           }
         }
       } catch (error) {

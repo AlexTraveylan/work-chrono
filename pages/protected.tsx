@@ -8,6 +8,7 @@ import { TimerApp } from '../components/shared/timerApp'
 import { StartTask } from '../components/start-task'
 import { ResumeSession } from '../components/resume-session'
 import Link from 'next/link'
+import { get_hour_minute_from_timeStamp } from '../components/shared/format'
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
@@ -31,6 +32,13 @@ export default function ProtectedPage() {
       <div className="m-3">
         <TodayDateTitle />
       </div>
+      {beginSession && (
+        <h3 className="text-2xl">
+          {' '}
+          Début : {get_hour_minute_from_timeStamp(beginSession).hour}h
+          {get_hour_minute_from_timeStamp(beginSession).minute}
+        </h3>
+      )}
       <div className="flex flex-col items-center">
         <div className=" flex flex-row gap-3 m-3">
           <StartDay
@@ -58,7 +66,10 @@ export default function ProtectedPage() {
       {!isPause && (
         <>
           <div className="flex flex-row justify-center gap-3 flex-wrap m-3">
-            <TimerApp title="Session" BeginTimeStamp={beginSession} />
+            <TimerApp
+              title="Temps total du jour"
+              BeginTimeStamp={beginSession}
+            />
             <TimerApp
               title={`Tache "${taskName}"`}
               BeginTimeStamp={taskTimer}

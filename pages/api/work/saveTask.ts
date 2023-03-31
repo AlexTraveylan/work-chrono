@@ -41,7 +41,7 @@ export default async function handler(
           .json({ message: 'Tache sauvegardée avec succes' })
       } catch (err) {
         // Gérer les erreurs lors de la récupération de la tâche
-        return res.status(400).json({ error: 'Tache non trouvée' })
+        return res.status(200).json({ error: 'Aucune tache trouvée' })
       }
     } else {
       // Gérer les erreurs lors de la récupération de la session

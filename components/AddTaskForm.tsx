@@ -40,13 +40,13 @@ export function AddTaskForm({
     <div className="flex flex-col items-center justify-center my-3">
       <svg
         onClick={() => changeIsVisible()}
-        width="50"
-        height="50"
+        width="55"
+        height="55"
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
+        strokeWidth="1.5"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -55,12 +55,12 @@ export function AddTaskForm({
       </svg>
       {isVisible && (
         <div className="flex flex-col gap-3 justify-center items-center shadow-md rounded p-3 border-1">
-          <h3 className="font-bold">Ajouter une tâche :</h3>
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3 items-center">
             <input
               type="text"
               name={newTask}
-              className="border rounded-md bg-white p-2 shadow-md"
+              className="border rounded-md bg-white p-2"
+              placeholder="Nouvelle tâche"
               onChange={(e) => handleInputChange(e)}
             />
             <div onClick={(e) => handleSubmit(e)}>

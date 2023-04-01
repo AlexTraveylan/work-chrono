@@ -17,11 +17,18 @@ export default function ProtectedPage() {
   const [taskName, setTaskName] = useState('')
   const [isPause, setIsPause] = useState(false)
   const [isDaySession, setIsDaySession] = useState(false)
+  const [sessionEndedAt, setSessionEndedAt] = useState<number | undefined>()
 
   async function seachDaySession() {
     const response = await fetch(`/api/work/isDaySession`)
     if (response.ok) {
-      setIsDaySession(true)
+      const data: { endedAt: string } = await response.json()
+      if (data.endedAt) {
+        const endedAt = new Date(data.endedAt).getTime()
+        setSessionEndedAt(endedAt)
+      } else {
+        setIsDaySession(true)
+      }
     } else {
       setIsDaySession(false)
     }
@@ -65,6 +72,7 @@ export default function ProtectedPage() {
             beginSession={beginSession}
             setBeginSession={setBeginSession}
             isDaySession={isDaySession}
+            sessionEndedAt={sessionEndedAt}
           />
           <ResumeSession
             setIsPause={setIsPause}
@@ -73,6 +81,7 @@ export default function ProtectedPage() {
             beginSession={beginSession}
             setBeginSession={setBeginSession}
             isDaySession={isDaySession}
+            sessionEndedAt={sessionEndedAt}
           />
         </div>
       </div>

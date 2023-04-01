@@ -18,7 +18,14 @@ export default async function handler(
     )
 
     if (testRecupSession) {
-      return res.status(200).json({ message: 'Il y a une session en cours' })
+      const testEndedSession = await dService.getEndedDaySessionForUserToday(
+        session.user.email
+      )
+      if (testEndedSession) {
+        return res.status(200).json({ endedAt: testEndedSession.endedAt })
+      } else {
+        return res.status(200).json({ message: 'Il y a une session en cours' })
+      }
     } else {
       return res.status(400).json({ erreur: 'Pas de session en cours' })
     }

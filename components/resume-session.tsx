@@ -8,6 +8,7 @@ export function ResumeSession({
   setTaskName,
   setIsPause,
   isDaySession,
+  sessionEndedAt,
 }: {
   beginSession: number | undefined
   setBeginSession: Dispatch<SetStateAction<number | undefined>>
@@ -15,6 +16,7 @@ export function ResumeSession({
   setTaskName: Dispatch<SetStateAction<string>>
   setIsPause: Dispatch<SetStateAction<boolean>>
   isDaySession: boolean
+  sessionEndedAt: number | undefined
 }) {
   async function resume() {
     try {
@@ -44,7 +46,7 @@ export function ResumeSession({
 
   return (
     <>
-      {!beginSession && isDaySession && (
+      {!beginSession && isDaySession && !sessionEndedAt && (
         <div onClick={() => resume()}>
           <ButtonApp title="Reprendre la session en cours" />
         </div>

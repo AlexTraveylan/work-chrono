@@ -1,6 +1,7 @@
 import { DaySession } from '@prisma/client'
 import { Dispatch, SetStateAction } from 'react'
 import { ButtonApp } from './shared/buttonApp'
+import { get_hour_minute_from_timeStamp } from './shared/format'
 
 export function StartDay({
   beginSession,
@@ -9,6 +10,7 @@ export function StartDay({
   isPause,
   setIsPause,
   isDaySession,
+  sessionEndedAt,
 }: {
   beginSession: number | undefined
   isDaySession: boolean
@@ -16,6 +18,7 @@ export function StartDay({
   setTaskTimer: Dispatch<SetStateAction<number | undefined>>
   isPause: boolean
   setIsPause: Dispatch<SetStateAction<boolean>>
+  sessionEndedAt: number | undefined
 }) {
   async function beginWork() {
     try {
@@ -97,11 +100,24 @@ export function StartDay({
         </div>
       ) : (
         <>
-          <div onClick={() => beginWork()}>
-            <ButtonApp
-              title={isDaySession ? 'Nouvelle session' : 'Démarrer la session'}
-            />
-          </div>
+          {sessionEndedAt ? (
+            <div className="text-xl flex flex-col gap-3 items-center">
+              <h3>Journée terminée à :</h3>
+              <div>
+                {get_hour_minute_from_timeStamp(sessionEndedAt).hour}h
+                {get_hour_minute_from_timeStamp(sessionEndedAt).minute}
+              </div>
+              <div>A demain 😊</div>
+            </div>
+          ) : (
+            <div onClick={() => beginWork()}>
+              <ButtonApp
+                title={
+                  isDaySession ? 'Nouvelle session' : 'Démarrer une session'
+                }
+              />
+            </div>
+          )}
         </>
       )}
     </>

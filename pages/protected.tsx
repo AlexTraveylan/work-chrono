@@ -9,6 +9,7 @@ import { StartTask } from '../components/start-task'
 import { ResumeSession } from '../components/resume-session'
 import Link from 'next/link'
 import { get_hour_minute_from_timeStamp } from '../components/shared/format'
+import { ButtonApp } from '../components/shared/buttonApp'
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
@@ -29,6 +30,9 @@ export default function ProtectedPage() {
   // If session exists, display content
   return (
     <Layout>
+      <Link href="/" className="mt-3">
+        Retour
+      </Link>
       <div className="m-3">
         <TodayDateTitle />
       </div>
@@ -55,12 +59,6 @@ export default function ProtectedPage() {
             beginSession={beginSession}
             setBeginSession={setBeginSession}
           />
-        </div>
-        <div className="flex flex-col gap-3 items-center my-3">
-          <Link href="/week-review">Résumé de la semaine</Link>
-          <Link href="/previous-week-review">
-            Résumé de la semaine précédente
-          </Link>
         </div>
       </div>
       {!isPause && (

@@ -1,9 +1,9 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./api/auth/[...nextauth]"
-import Layout from "../components/layout"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '../api/auth/[...nextauth]'
+import Layout from '../../components/layout'
 
-import type { GetServerSidePropsContext } from "next"
-import type { Session } from "next-auth"
+import type { GetServerSidePropsContext } from 'next'
+import type { Session } from 'next-auth'
 
 export default function ServerSidePage({ session }: { session: Session }) {
   // As this page uses Server Side Rendering, the `session` will be already
@@ -12,11 +12,11 @@ export default function ServerSidePage({ session }: { session: Session }) {
     <Layout>
       <h1>Server Side Rendering</h1>
       <p>
-        This page uses the <strong>getServerSession()</strong> method in{" "}
+        This page uses the <strong>getServerSession()</strong> method in{' '}
         <strong>getServerSideProps()</strong>.
       </p>
       <p>
-        Using <strong>getServerSession()</strong> in{" "}
+        Using <strong>getServerSession()</strong> in{' '}
         <strong>getServerSideProps()</strong> is the recommended approach if you
         need to support Server Side Rendering with authentication.
       </p>

@@ -33,7 +33,7 @@ export default function WeekReview() {
   // If session exists, display content
   return (
     <Layout>
-      <Link href="protected" className="mt-3">
+      <Link href="/" className="mt-3">
         Retour
       </Link>
       <h1 className="text-5xl font-bold m-3">Resumé</h1>

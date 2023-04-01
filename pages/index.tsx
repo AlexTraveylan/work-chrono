@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import BtnAccesIfLogged from '../components/btn-acces-iflogged'
 import Layout from '../components/layout'
-import { ButtonApp } from '../components/shared/buttonApp'
-import { useState } from 'react'
 
 export default function ServerSidePage() {
   return (

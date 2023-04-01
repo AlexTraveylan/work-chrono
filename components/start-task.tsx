@@ -47,10 +47,11 @@ export function StartTask({
       body: JSON.stringify({ taskName }),
     })
 
-    const data = await response.json()
-    const startedAt = new Date(data.startedAt).getTime()
-
-    setTaskTimer(startedAt)
+    if (response.ok) {
+      const data = await response.json()
+      const startedAt = new Date(data.startedAt).getTime()
+      setTaskTimer(startedAt)
+    }
   }
 
   async function cancelTask() {

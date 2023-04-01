@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Layout from '../components/layout'
 import AccessDenied from '../components/access-denied'
@@ -9,7 +9,6 @@ import { StartTask } from '../components/start-task'
 import { ResumeSession } from '../components/resume-session'
 import Link from 'next/link'
 import { get_hour_minute_from_timeStamp } from '../components/shared/format'
-import { ButtonApp } from '../components/shared/buttonApp'
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
@@ -17,6 +16,20 @@ export default function ProtectedPage() {
   const [taskTimer, setTaskTimer] = useState<number>()
   const [taskName, setTaskName] = useState('')
   const [isPause, setIsPause] = useState(false)
+  const [isDaySession, setIsDaySession] = useState(false)
+
+  async function seachDaySession() {
+    const response = await fetch(`/api/work/isDaySession`)
+    if (response.ok) {
+      setIsDaySession(true)
+    } else {
+      setIsDaySession(false)
+    }
+  }
+
+  useEffect(() => {
+    seachDaySession()
+  }, [])
 
   // If no session exists, display access denied message
   if (!session) {
@@ -44,13 +57,14 @@ export default function ProtectedPage() {
         </h3>
       )}
       <div className="flex flex-col items-center">
-        <div className=" flex flex-row gap-3 m-3">
+        <div className=" flex flex-row gap-3 m-3 flex-wrap justify-center">
           <StartDay
             isPause={isPause}
             setIsPause={setIsPause}
             setTaskTimer={setTaskTimer}
             beginSession={beginSession}
             setBeginSession={setBeginSession}
+            isDaySession={isDaySession}
           />
           <ResumeSession
             setIsPause={setIsPause}
@@ -58,6 +72,7 @@ export default function ProtectedPage() {
             setTaskName={setTaskName}
             beginSession={beginSession}
             setBeginSession={setBeginSession}
+            isDaySession={isDaySession}
           />
         </div>
       </div>

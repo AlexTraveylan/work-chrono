@@ -54,7 +54,9 @@ export default function ProtectedPage() {
       <div>
         {tasks && Array.isArray(tasks) && tasks?.length != 0 ? (
           <>
-            <h1 className="text-5xl mb-6">Liste des Tâches ajoutées</h1>
+            <h1 className="text-5xl mb-6 text-center">
+              Liste des Tâches ajoutées
+            </h1>
             <ul>
               {tasks.map((task) => {
                 return (

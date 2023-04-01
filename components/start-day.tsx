@@ -8,8 +8,10 @@ export function StartDay({
   setTaskTimer,
   isPause,
   setIsPause,
+  isDaySession,
 }: {
   beginSession: number | undefined
+  isDaySession: boolean
   setBeginSession: Dispatch<SetStateAction<number | undefined>>
   setTaskTimer: Dispatch<SetStateAction<number | undefined>>
   isPause: boolean
@@ -81,7 +83,7 @@ export function StartDay({
       {beginSession ? (
         <div className="flex flex-row gap-3">
           <div onClick={() => endWork()}>
-            <ButtonApp title="Fin de la session" />
+            <ButtonApp title="Finir et sauvegarder la journée" />
           </div>
           {isPause ? (
             <div className="text-red-800 font-bold" onClick={() => endPause()}>
@@ -94,9 +96,13 @@ export function StartDay({
           )}
         </div>
       ) : (
-        <div onClick={() => beginWork()}>
-          <ButtonApp title="Démarrer la session" />
-        </div>
+        <>
+          <div onClick={() => beginWork()}>
+            <ButtonApp
+              title={isDaySession ? 'Nouvelle session' : 'Démarrer la session'}
+            />
+          </div>
+        </>
       )}
     </>
   )

@@ -19,7 +19,7 @@ export default function Header() {
           <Link href="/">
             <h3>Logo</h3>
           </Link>
-          <h3>You are not signed in</h3>
+          <h3>Connectez-vous</h3>
           <Link
             href={`/api/auth/signin`}
             onClick={(e) => {
@@ -27,7 +27,22 @@ export default function Header() {
               signIn()
             }}
           >
-            <ButtonApp title="Se connecter" />
+            <svg
+              className="cursor-pointer"
+              width="40"
+              height="40"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.3"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="m9.75 8.75 3.5 3.25-3.5 3.25"></path>
+              <path d="M9.75 4.75h7.5a2 2 0 0 1 2 2v10.5a2 2 0 0 1-2 2h-7.5"></path>
+              <path d="M13 12H4.75"></path>
+            </svg>
           </Link>
         </div>
       )}
@@ -44,14 +59,29 @@ export default function Header() {
               </p>
             </div>
             <Link
-              className="min-w-[20%] text-end"
+              className="min-w-[20%] flex justify-end"
               href={`/api/auth/signout`}
               onClick={(e) => {
                 e.preventDefault()
                 signOut()
               }}
             >
-              <ButtonApp title="Se déconnecter" />
+              <svg
+                className="cursor-pointer"
+                width="40"
+                height="40"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.3"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="m15.75 8.75 3.5 3.25-3.5 3.25"></path>
+                <path d="M19 12h-8.25"></path>
+                <path d="M15.25 4.75h-8.5a2 2 0 0 0-2 2v10.5a2 2 0 0 0 2 2h8.5"></path>
+              </svg>
             </Link>
           </div>
         </>

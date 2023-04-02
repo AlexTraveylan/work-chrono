@@ -31,6 +31,20 @@ export function get_hour_minute_from_timeStamp(timestamp: number): FakeHour {
   }
 }
 
+export function get_total_hours_and_minutes_from_timeStamp(
+  timestamp: number
+): FakeHour {
+  const hours = Math.floor(timestamp / (1000 * 60 * 60))
+  const minutes = Math.floor(
+    (timestamp - hours * (1000 * 60 * 60)) / (1000 * 60)
+  )
+
+  return {
+    hour: hours,
+    minute: minutes,
+  }
+}
+
 export function get_7h_from_timeStamp(timestamp: number) {
   const date = new Date(timestamp)
 

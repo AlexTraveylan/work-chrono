@@ -5,17 +5,30 @@ import AccessDenied from '../components/access-denied'
 import { AffResume } from '../components/aff-resume'
 import { DailyPlanner } from '../components/daily-planner'
 import Layout from '../components/layout'
+import { get_total_hours_and_minutes_from_timeStamp } from '../components/shared/format'
 import { DaySessionBdd } from '../testdata/models/DaySessionBdd'
 
 export default function WeekReview() {
   const { data: session } = useSession()
-  const [daySessionData, setDAySessionData] = useState<DaySessionBdd[]>()
+  const [daySessionData, setDaySessionData] = useState<DaySessionBdd[]>()
+  const [totalTimeWorkMilliseconds, setTotalTimeWorkMilliseconds] =
+    useState<number>()
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(`/api/reviews/previousWeekReview`)
+
       if (response.ok) {
-        const data = await response.json()
-        setDAySessionData(data)
+        const daysSession: DaySessionBdd[] = await response.json()
+        setDaySessionData(daysSession)
+
+        // On ajoute le temps chaque jour de la semaine pour obtenir le total
+        let calcTimeWoked = 0
+        for (let daySession of daysSession) {
+          const beginTimeStamp = new Date(daySession.startedAt).getTime()
+          const endTimeStamp = new Date(daySession.endedAt).getTime()
+          calcTimeWoked += endTimeStamp - beginTimeStamp
+        }
+        setTotalTimeWorkMilliseconds(calcTimeWoked)
       }
     }
     fetchData()
@@ -36,7 +49,26 @@ export default function WeekReview() {
       <Link href="/" className="mt-3">
         Retour
       </Link>
-      <h1 className="text-5xl font-bold m-3">Resumé</h1>
+      {totalTimeWorkMilliseconds && (
+        <div className="flex flex-col items-center text-center gap-3 my-5">
+          <h1 className="text-3xl px-3">
+            Nombre d'heures total de la semaine :{' '}
+          </h1>
+          <h3 className="text-5xl text-teal-700">
+            {
+              get_total_hours_and_minutes_from_timeStamp(
+                totalTimeWorkMilliseconds
+              ).hour
+            }
+            h
+            {
+              get_total_hours_and_minutes_from_timeStamp(
+                totalTimeWorkMilliseconds
+              ).minute
+            }
+          </h3>
+        </div>
+      )}
       <div className="flex flex-row gap-3 flex-wrap justify-center">
         {daySessionData &&
           daySessionData.map((daySession) => (

@@ -110,12 +110,17 @@ export function StartDay({
               <div>A demain 😊</div>
             </div>
           ) : (
-            <div onClick={() => beginWork()}>
+            <div
+              onClick={() => beginWork()}
+              className="flex flex-col gap-3 items-center"
+            >
               <ButtonApp
                 title={
                   isDaySession ? 'Nouvelle session' : 'Démarrer une session'
                 }
               />
+
+              {!isDaySession && <h4>Aucune session en cours detectée</h4>}
             </div>
           )}
         </>

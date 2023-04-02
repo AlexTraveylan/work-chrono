@@ -1,5 +1,4 @@
 import { useSession } from 'next-auth/react'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import AccessDenied from '../components/access-denied'
 import { AffResume } from '../components/aff-resume'
@@ -12,8 +11,10 @@ import { DaySessionBdd } from '../testdata/models/DaySessionBdd'
 export default function WeekReview() {
   const { data: session } = useSession()
   const [daySessionData, setDaySessionData] = useState<DaySessionBdd[]>()
-  const [totalTimeWorkMilliseconds, setTotalTimeWorkMilliseconds] =
-    useState<number>()
+  const [
+    totalTimeWorkMillisecondsToString,
+    setTotalTimeWorkMillisecondsToString,
+  ] = useState<string>()
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(`/api/reviews/previousWeekReview`)
@@ -29,7 +30,11 @@ export default function WeekReview() {
           const endTimeStamp = new Date(daySession.endedAt).getTime()
           calcTimeWoked += endTimeStamp - beginTimeStamp
         }
-        setTotalTimeWorkMilliseconds(calcTimeWoked)
+        const hoursMinutes =
+          get_total_hours_and_minutes_from_timeStamp(calcTimeWoked)
+        setTotalTimeWorkMillisecondsToString(
+          `${hoursMinutes.hour}h${hoursMinutes.minute}`
+        )
       }
     }
     fetchData()
@@ -48,21 +53,11 @@ export default function WeekReview() {
   return (
     <Layout>
       <ReturnButton path="/" />
-      {totalTimeWorkMilliseconds && (
+      {totalTimeWorkMillisecondsToString && (
         <div className="flex flex-col items-center text-center gap-3 mb-5">
           <h1 className="text-3xl px-3">Nombre d'heures de la semaine : </h1>
           <h3 className="text-5xl text-teal-700">
-            {
-              get_total_hours_and_minutes_from_timeStamp(
-                totalTimeWorkMilliseconds
-              ).hour
-            }
-            h
-            {
-              get_total_hours_and_minutes_from_timeStamp(
-                totalTimeWorkMilliseconds
-              ).minute
-            }
+            {totalTimeWorkMillisecondsToString}
           </h3>
         </div>
       )}

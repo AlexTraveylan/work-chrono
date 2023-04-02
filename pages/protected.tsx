@@ -19,6 +19,7 @@ export default function ProtectedPage() {
   const [isPause, setIsPause] = useState(false)
   const [isDaySession, setIsDaySession] = useState(false)
   const [sessionEndedAt, setSessionEndedAt] = useState<number | undefined>()
+  const [beginToString, setBeginToString] = useState<string | undefined>()
 
   async function seachDaySession() {
     const response = await fetch(`/api/work/isDaySession`)
@@ -39,6 +40,14 @@ export default function ProtectedPage() {
     seachDaySession()
   }, [])
 
+  useEffect(() => {
+    if (beginSession) {
+      const heuresMinutes = get_hour_minute_from_timeStamp(beginSession)
+
+      setBeginToString(`${heuresMinutes.hour}h${heuresMinutes.minute}`)
+    }
+  }, [beginSession])
+
   // If no session exists, display access denied message
   if (!session) {
     return (
@@ -55,13 +64,7 @@ export default function ProtectedPage() {
       <div className="mb-3">
         <TodayDateTitle />
       </div>
-      {beginSession && (
-        <h3 className="text-2xl">
-          {' '}
-          Début : {get_hour_minute_from_timeStamp(beginSession).hour}h
-          {get_hour_minute_from_timeStamp(beginSession).minute}
-        </h3>
-      )}
+      {beginSession && <h3 className="text-2xl">Début : {beginToString}</h3>}
       <div className="flex flex-col items-center">
         <div className=" flex flex-col gap-3 m-3 flex-wrap justify-center">
           <StartDay

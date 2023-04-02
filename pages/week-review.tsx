@@ -6,6 +6,7 @@ import { AffResume } from '../components/aff-resume'
 import { DailyPlanner } from '../components/daily-planner'
 import Layout from '../components/layout'
 import { get_total_hours_and_minutes_from_timeStamp } from '../components/shared/format'
+import { ReturnButton } from '../components/shared/return'
 import { DaySessionBdd } from '../testdata/models/DaySessionBdd'
 
 export default function WeekReview() {
@@ -45,14 +46,10 @@ export default function WeekReview() {
   // If session exists, display content
   return (
     <Layout>
-      <Link href="/" className="mt-3">
-        Retour
-      </Link>
+      <ReturnButton path="/" />
       {totalTimeWorkMilliseconds && (
-        <div className="flex flex-col items-center text-center gap-3 my-5">
-          <h1 className="text-3xl px-3">
-            Nombre d'heures total de la semaine :{' '}
-          </h1>
+        <div className="flex flex-col items-center text-center gap-3 mb-5">
+          <h1 className="text-3xl px-3">Nombre d'heures de la semaine : </h1>
           <h3 className="text-5xl text-teal-700">
             {
               get_total_hours_and_minutes_from_timeStamp(

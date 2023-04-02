@@ -38,10 +38,12 @@ export function AddTaskForm({
 
   return (
     <div className="flex flex-col items-center justify-center my-3">
+      {/* Bouton plus */}
       <svg
+        className="cursor-pointer"
         onClick={() => changeIsVisible()}
-        width="55"
-        height="55"
+        width="53"
+        height="53"
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
@@ -64,7 +66,7 @@ export function AddTaskForm({
               onChange={(e) => handleInputChange(e)}
             />
             <div onClick={(e) => handleSubmit(e)}>
-              <ButtonApp title="Ajouter" />
+              <ButtonApp>Ajouter</ButtonApp>
             </div>
           </form>
         </div>

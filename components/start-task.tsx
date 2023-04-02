@@ -75,14 +75,14 @@ export function StartTask({
       {taskTimer ? (
         <div className="flex flex-row gap-3 p-3">
           <div onClick={() => cancelTask()}>
-            <ButtonApp title="Annuler la tâche" />
+            <ButtonApp>Annuler la tâche</ButtonApp>
           </div>
           <div onClick={() => saveTask()}>
-            <ButtonApp title="Terminer la tâche" />
+            <ButtonApp>Terminer la tâche</ButtonApp>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-3 justify-center items-center shadow-md rounded p-3 border-1">
+        <div className="flex flex-col gap-3 justify-center items-center shadow-md rounded p-3 border-1 relative">
           <h3 className="font-bold">Commencer une nouvelle tache :</h3>
           <div className="flex flex-row items-center gap-3">
             <select
@@ -96,7 +96,7 @@ export function StartTask({
                 </option>
               ))}
             </select>
-            <Link href="settingtask">
+            <Link href="settingtask" className="absolute right-5">
               <svg
                 className="cursor-pointer"
                 width="30"
@@ -117,7 +117,7 @@ export function StartTask({
             </Link>
           </div>
           <div onClick={() => beginWork()}>
-            <ButtonApp title="Commencer" />
+            <ButtonApp>C'est parti !</ButtonApp>
           </div>
         </div>
       )}

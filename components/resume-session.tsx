@@ -47,8 +47,12 @@ export function ResumeSession({
   return (
     <>
       {!beginSession && isDaySession && !sessionEndedAt && (
-        <div onClick={() => resume()}>
-          <ButtonApp title="Reprendre la session en cours" />
+        <div
+          onClick={() => resume()}
+          className="flex flex-col gap-3 items-center"
+        >
+          <ButtonApp>Reprendre la session en cours</ButtonApp>
+          {isDaySession && <h3>Session en cours detectée</h3>}
         </div>
       )}
     </>

@@ -18,7 +18,7 @@ export default function BtnAccesIfLogged() {
   // If session exists, display content
   return (
     <Link href="/protected">
-      <ButtonApp title="Entrer" />
+      <ButtonApp>Entrer</ButtonApp>
     </Link>
   )
 }

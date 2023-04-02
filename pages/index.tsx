@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import BtnAccesIfLogged from '../components/btn-acces-iflogged'
 import Layout from '../components/layout'
 import ResumeWeekIfLogged from '../components/resume-week-link-iflogged'

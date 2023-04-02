@@ -3,7 +3,7 @@ import Layout from '../components/layout'
 import AccessDenied from '../components/access-denied'
 import { useEffect, useState } from 'react'
 import { AddTaskForm } from '../components/AddTaskForm'
-import Link from 'next/link'
+import { ReturnButton } from '../components/shared/return'
 
 export type Taches = {
   taches: string[]
@@ -48,9 +48,7 @@ export default function ProtectedPage() {
   // If session exists, display content
   return (
     <Layout>
-      <Link href="/" className="mt-3">
-        Retour
-      </Link>
+      <ReturnButton path="/" />
       <div>
         {tasks && Array.isArray(tasks) && tasks?.length != 0 ? (
           <>
@@ -88,7 +86,7 @@ export default function ProtectedPage() {
             </ul>
           </>
         ) : (
-          <h1>Aucune taches pour le moment</h1>
+          <h1>Aucune tache ajouté pour le moment, ajoutez-en !</h1>
         )}
         <AddTaskForm setTasks={setTasks} />
       </div>

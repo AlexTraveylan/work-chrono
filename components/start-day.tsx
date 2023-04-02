@@ -84,17 +84,48 @@ export function StartDay({
   return (
     <>
       {beginSession ? (
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row gap-3 flex-wrap items-center justify-center">
           <div onClick={() => endWork()}>
-            <ButtonApp title="Finir et sauvegarder la journée" />
+            <ButtonApp>Finir et sauvegarder la journée</ButtonApp>
           </div>
           {isPause ? (
-            <div className="text-red-800 font-bold" onClick={() => endPause()}>
-              <ButtonApp title="Reprendre" />
+            <div className="text-teal-800" onClick={() => endPause()}>
+              {/* Bouton Reprendre */}
+              <ButtonApp>
+                <svg
+                  width="23"
+                  height="23"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M18.25 12 5.75 5.75v12.5L18.25 12Z"></path>
+                </svg>
+              </ButtonApp>
             </div>
           ) : (
-            <div onClick={() => beginPause()}>
-              <ButtonApp title="Faire une pause" />
+            <div className="text-red-800" onClick={() => beginPause()}>
+              {/* Bouton pause */}
+              <ButtonApp>
+                <svg
+                  width="23"
+                  height="23"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M15.25 6.75v10.5"></path>
+                  <path d="M8.75 6.75v10.5"></path>
+                </svg>
+              </ButtonApp>
             </div>
           )}
         </div>
@@ -114,11 +145,9 @@ export function StartDay({
               onClick={() => beginWork()}
               className="flex flex-col gap-3 items-center"
             >
-              <ButtonApp
-                title={
-                  isDaySession ? 'Nouvelle session' : 'Démarrer une session'
-                }
-              />
+              <ButtonApp>
+                {isDaySession ? 'Nouvelle session' : 'Démarrer une session'}
+              </ButtonApp>
 
               {!isDaySession && <h4>Aucune session en cours detectée</h4>}
             </div>

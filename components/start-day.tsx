@@ -1,7 +1,10 @@
 import { DaySession } from '@prisma/client'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { ButtonApp } from './shared/buttonApp'
-import { get_hour_minute_from_timeStamp } from './shared/format'
+import {
+  formatOneorTwoDigitOnToTwoDigits,
+  get_hour_minute_from_timeStamp,
+} from './shared/format'
 
 export function StartDay({
   beginSession,
@@ -20,6 +23,19 @@ export function StartDay({
   setIsPause: Dispatch<SetStateAction<boolean>>
   sessionEndedAt: number | undefined
 }) {
+  const [endTime, setEntime] = useState<string>()
+
+  useEffect(() => {
+    if (sessionEndedAt) {
+      const time = get_hour_minute_from_timeStamp(sessionEndedAt)
+      setEntime(
+        `${formatOneorTwoDigitOnToTwoDigits(
+          time.hour
+        )}h${formatOneorTwoDigitOnToTwoDigits(time.minute)}`
+      )
+    }
+  }, [sessionEndedAt])
+
   async function beginWork() {
     try {
       const response = await fetch(`/api/work/begin`)
@@ -134,10 +150,7 @@ export function StartDay({
           {sessionEndedAt ? (
             <div className="text-xl flex flex-col gap-3 items-center">
               <h3>Journée terminée à :</h3>
-              <div>
-                {get_hour_minute_from_timeStamp(sessionEndedAt).hour}h
-                {get_hour_minute_from_timeStamp(sessionEndedAt).minute}
-              </div>
+              <div>{endTime}</div>
               <div>A demain 😊</div>
             </div>
           ) : (

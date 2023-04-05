@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import Layout from '../components/layout'
+import { useEffect, useState } from 'react'
 import AccessDenied from '../components/access-denied'
-import { StartDay } from '../components/start-day'
-import { TodayDateTitle } from '../components/shared/today-date-title'
-import { TimerApp } from '../components/shared/timerApp'
-import { StartTask } from '../components/start-task'
+import Layout from '../components/layout'
 import { ResumeSession } from '../components/resume-session'
-import Link from 'next/link'
-import { get_hour_minute_from_timeStamp } from '../components/shared/format'
+import {
+  formatOneorTwoDigitOnToTwoDigits,
+  get_hour_minute_from_timeStamp,
+} from '../components/shared/format'
+import { Loader } from '../components/shared/loader'
 import { ReturnButton } from '../components/shared/return'
+import { TimerApp } from '../components/shared/timerApp'
+import { TodayDateTitle } from '../components/shared/today-date-title'
+import { StartDay } from '../components/start-day'
+import { StartTask } from '../components/start-task'
 
 export default function ProtectedPage() {
   const { data: session } = useSession()
@@ -20,6 +23,7 @@ export default function ProtectedPage() {
   const [isDaySession, setIsDaySession] = useState(false)
   const [sessionEndedAt, setSessionEndedAt] = useState<number | undefined>()
   const [beginToString, setBeginToString] = useState<string | undefined>()
+  const [isLoading, setIsLoading] = useState(true)
 
   async function seachDaySession() {
     const response = await fetch(`/api/work/isDaySession`)
@@ -34,6 +38,7 @@ export default function ProtectedPage() {
     } else {
       setIsDaySession(false)
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -44,7 +49,11 @@ export default function ProtectedPage() {
     if (beginSession) {
       const heuresMinutes = get_hour_minute_from_timeStamp(beginSession)
 
-      setBeginToString(`${heuresMinutes.hour}h${heuresMinutes.minute}`)
+      setBeginToString(
+        `${formatOneorTwoDigitOnToTwoDigits(
+          heuresMinutes.hour
+        )}h${formatOneorTwoDigitOnToTwoDigits(heuresMinutes.minute)}`
+      )
     }
   }, [beginSession])
 
@@ -67,6 +76,7 @@ export default function ProtectedPage() {
       {beginSession && <h3 className="text-2xl">Début : {beginToString}</h3>}
       <div className="flex flex-col items-center">
         <div className=" flex flex-col gap-3 m-3 flex-wrap justify-center">
+          <Loader show={isLoading} />
           <StartDay
             isPause={isPause}
             setIsPause={setIsPause}

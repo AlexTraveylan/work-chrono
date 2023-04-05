@@ -1,8 +1,9 @@
 import { useSession } from 'next-auth/react'
-import Layout from '../components/layout'
-import AccessDenied from '../components/access-denied'
 import { useEffect, useState } from 'react'
+import AccessDenied from '../components/access-denied'
 import { AddTaskForm } from '../components/AddTaskForm'
+import Layout from '../components/layout'
+import { Loader } from '../components/shared/loader'
 import { ReturnButton } from '../components/shared/return'
 
 export type Taches = {
@@ -12,6 +13,7 @@ export type Taches = {
 export default function ProtectedPage() {
   const { data: session } = useSession()
   const [tasks, setTasks] = useState<string[] | undefined>()
+  const [isLoading, setIsLoading] = useState(true)
 
   async function recupTasks() {
     const response = await fetch(`/api/taches/getTask`)
@@ -19,6 +21,7 @@ export default function ProtectedPage() {
       const tasks: Taches = await response.json()
       setTasks(tasks.taches)
     }
+    setIsLoading(false)
   }
 
   async function deleteTaches(taskToDelete: string) {
@@ -49,6 +52,7 @@ export default function ProtectedPage() {
   return (
     <Layout>
       <ReturnButton path="/" />
+      <Loader show={isLoading} />
       <div>
         {tasks && Array.isArray(tasks) && tasks?.length != 0 ? (
           <>

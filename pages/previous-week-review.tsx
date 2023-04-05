@@ -4,7 +4,11 @@ import AccessDenied from '../components/access-denied'
 import { AffResume } from '../components/aff-resume'
 import { DailyPlanner } from '../components/daily-planner'
 import Layout from '../components/layout'
-import { get_total_hours_and_minutes_from_timeStamp } from '../components/shared/format'
+import {
+  formatOneorTwoDigitOnToTwoDigits,
+  get_total_hours_and_minutes_from_timeStamp,
+} from '../components/shared/format'
+import { Loader } from '../components/shared/loader'
 import { ReturnButton } from '../components/shared/return'
 import { DaySessionBdd } from '../testdata/models/DaySessionBdd'
 
@@ -15,6 +19,7 @@ export default function WeekReview() {
     totalTimeWorkMillisecondsToString,
     setTotalTimeWorkMillisecondsToString,
   ] = useState<string>()
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(`/api/reviews/previousWeekReview`)
@@ -33,9 +38,12 @@ export default function WeekReview() {
         const hoursMinutes =
           get_total_hours_and_minutes_from_timeStamp(calcTimeWoked)
         setTotalTimeWorkMillisecondsToString(
-          `${hoursMinutes.hour}h${hoursMinutes.minute}`
+          `${formatOneorTwoDigitOnToTwoDigits(
+            hoursMinutes.hour
+          )}h${formatOneorTwoDigitOnToTwoDigits(hoursMinutes.minute)}`
         )
       }
+      setIsLoading(false)
     }
     fetchData()
   }, [])
@@ -53,6 +61,7 @@ export default function WeekReview() {
   return (
     <Layout>
       <ReturnButton path="/" />
+      <Loader show={isLoading} />
       {totalTimeWorkMillisecondsToString && (
         <div className="flex flex-col items-center text-center gap-3 mb-5">
           <h1 className="text-3xl px-3">Nombre d'heures de la semaine : </h1>

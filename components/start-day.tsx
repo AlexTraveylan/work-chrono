@@ -14,6 +14,7 @@ export function StartDay({
   setIsPause,
   isDaySession,
   sessionEndedAt,
+  setSessionEndedAt,
 }: {
   beginSession: number | undefined
   isDaySession: boolean
@@ -22,6 +23,7 @@ export function StartDay({
   isPause: boolean
   setIsPause: Dispatch<SetStateAction<boolean>>
   sessionEndedAt: number | undefined
+  setSessionEndedAt: Dispatch<SetStateAction<number | undefined>>
 }) {
   const [endTime, setEntime] = useState<string>()
 
@@ -37,43 +39,28 @@ export function StartDay({
   }, [sessionEndedAt])
 
   async function beginWork() {
-    try {
-      const response = await fetch(`/api/work/begin`)
-      if (response.ok) {
-        const data: DaySession = await response.json()
-        const startedAtDate = new Date(data.startedAt)
-        setBeginSession(startedAtDate.getTime())
-      } else {
-        // handle error
-        console.error('Error fetching data')
-      }
-    } catch (error) {
-      // handle error
-      console.error(error)
+    const response = await fetch(`/api/work/begin`)
+    if (response.ok) {
+      const data: DaySession = await response.json()
+      const startedAtDate = new Date(data.startedAt)
+      setBeginSession(startedAtDate.getTime())
     }
   }
 
   async function endWork() {
     if (beginSession) {
-      try {
-        const response0 = await fetch(`/api/work/end`)
-        if (response0.ok) {
-          // Posibilité de recuperer endedAt ici
-          setBeginSession(undefined)
-          const response1 = await fetch(`/api/work/saveTask`)
-          if (response1.ok) {
-            setTaskTimer(undefined)
-
-            const response2 = await fetch(`/api/work/savePause`)
-            if (response2.ok) {
-              setIsPause(false)
-              await fetch(`/api/work/purge`)
-            }
-          }
+      const response0 = await fetch(`/api/work/end`)
+      if (response0.ok) {
+        const { endedAt }: { endedAt: number } = await response0.json()
+        setSessionEndedAt(endedAt)
+        setBeginSession(undefined)
+        const response1 = await fetch(`/api/work/saveTask`)
+        const response2 = await fetch(`/api/work/savePause`)
+        if (response1.ok && response2.ok) {
+          setTaskTimer(undefined)
+          setIsPause(false)
+          await fetch(`/api/work/purge`)
         }
-      } catch (error) {
-        // handle error
-        console.error(error)
       }
     }
   }

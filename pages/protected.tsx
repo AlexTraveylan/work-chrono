@@ -85,6 +85,7 @@ export default function ProtectedPage() {
             setBeginSession={setBeginSession}
             isDaySession={isDaySession}
             sessionEndedAt={sessionEndedAt}
+            setSessionEndedAt={setSessionEndedAt}
           />
           <ResumeSession
             setIsPause={setIsPause}

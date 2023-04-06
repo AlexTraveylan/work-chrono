@@ -19,28 +19,23 @@ export function ResumeSession({
   sessionEndedAt: number | undefined
 }) {
   async function resume() {
-    try {
-      const response = await fetch(`/api/work/resume`)
-      if (response.ok) {
-        const data = await response.json()
-        const startedAt = new Date(data.session.startedAt)
-        setBeginSession(startedAt.getTime())
-        if (data.task) {
-          const currentTaskName = data.task.label
-          const currentTaskStartedAt = new Date(data.task.startedAt)
-          setTaskName(currentTaskName)
-          setTaskTimer(currentTaskStartedAt.getTime())
-        }
-        if (data.pause) {
-          setIsPause(true)
-        }
-      } else {
-        // handle error
-        console.error('Error fetching data')
+    const response = await fetch(`/api/work/resume`)
+    if (response.ok) {
+      const data = await response.json()
+      const startedAt = new Date(data.session.startedAt)
+      setBeginSession(startedAt.getTime())
+      if (data.task) {
+        const currentTaskName = data.task.label
+        const currentTaskStartedAt = new Date(data.task.startedAt)
+        setTaskName(currentTaskName)
+        setTaskTimer(currentTaskStartedAt.getTime())
       }
-    } catch (error) {
+      if (data.pause) {
+        setIsPause(true)
+      }
+    } else {
       // handle error
-      console.error(error)
+      console.error('Error fetching data')
     }
   }
 

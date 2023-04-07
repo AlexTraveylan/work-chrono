@@ -15,7 +15,7 @@ import { StartDay } from '../components/start-day'
 import { StartTask } from '../components/start-task'
 
 export default function ProtectedPage() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [beginSession, setBeginSession] = useState<number>()
   const [taskTimer, setTaskTimer] = useState<number>()
   const [taskName, setTaskName] = useState('')
@@ -57,8 +57,16 @@ export default function ProtectedPage() {
     }
   }, [beginSession])
 
-  // If no session exists, display access denied message
+  if (status === 'loading') {
+    return (
+      <Layout>
+        <Loader show={true} />
+      </Layout>
+    )
+  }
+
   if (!session) {
+    // If no session exists, display access denied message
     return (
       <Layout>
         <AccessDenied />

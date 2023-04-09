@@ -31,6 +31,7 @@ export default function ResumeWeekIfLogged() {
               <path d="M9.75 15.25h4.5"></path>
             </svg>
           </Link>
+          <Link href="/review_month">Bilans mensuels</Link>
         </div>
       )}
     </>

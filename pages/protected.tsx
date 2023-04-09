@@ -5,7 +5,7 @@ import Layout from '../components/layout'
 import { ResumeSession } from '../components/resume-session'
 import {
   formatOneorTwoDigitOnToTwoDigits,
-  get_hour_minute_from_timeStamp,
+  get_hour_minute_from_timeStamp
 } from '../components/shared/format'
 import { Loader } from '../components/shared/loader'
 import { ReturnButton } from '../components/shared/return'
@@ -60,6 +60,7 @@ export default function ProtectedPage() {
   if (status === 'loading') {
     return (
       <Layout>
+        <h3>Chargement du profil utilisateur ...</h3>
         <Loader show={true} />
       </Layout>
     )

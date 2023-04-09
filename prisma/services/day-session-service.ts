@@ -1,5 +1,13 @@
 import { DaySession } from '@prisma/client'
-import { endOfWeek, isToday, startOfWeek, sub } from 'date-fns'
+import {
+  differenceInMonths,
+  endOfMonth,
+  endOfWeek,
+  isToday,
+  startOfMonth,
+  startOfWeek,
+  sub,
+} from 'date-fns'
 import { prisma } from './prisma-client'
 
 export class DaySessionService {
@@ -171,5 +179,71 @@ export class DaySessionService {
     )
 
     return todayEndedDaySession
+  }
+
+  async getAllDaySessionsForUserFor_n_previousMonth(
+    userEmail: string,
+    nb_month_back: number
+  ) {
+    const user = await prisma.userApp.findUnique({
+      where: {
+        email: userEmail,
+      },
+    })
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const currentDate = new Date()
+    const startOfTargetMonth = startOfMonth(
+      sub(currentDate, { months: nb_month_back })
+    )
+    const endOfTargetMonth = endOfMonth(
+      sub(currentDate, { months: nb_month_back })
+    )
+
+    const daySessions = await prisma.daySession.findMany({
+      where: {
+        userId: user.id,
+        startedAt: {
+          gte: startOfTargetMonth,
+          lt: endOfTargetMonth,
+        },
+      },
+    })
+
+    return daySessions
+  }
+
+  async getNumberOfAccessibleMonths(userEmail: string) {
+    const user = await prisma.userApp.findUnique({
+      where: {
+        email: userEmail,
+      },
+    })
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const daySessions = await prisma.daySession.findMany({
+      where: {
+        userId: user.id,
+      },
+      orderBy: {
+        startedAt: 'asc',
+      },
+    })
+
+    if (daySessions.length === 0) {
+      return 0
+    }
+
+    const firstDaySessionMonth = startOfMonth(daySessions[0].startedAt)
+    const currentDate = new Date()
+    const diffInMonths = differenceInMonths(currentDate, firstDaySessionMonth)
+
+    return diffInMonths
   }
 }

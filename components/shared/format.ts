@@ -1,5 +1,14 @@
 import { FakeHour } from '../../testdata/models/FakeDate'
 
+export function formatDatefromTimestamp(timestamp: number): string {
+  const date = new Date(timestamp)
+  return `${formatOneorTwoDigitOnToTwoDigits(
+    date.getDate()
+  )}/${formatOneorTwoDigitOnToTwoDigits(
+    date.getMonth() + 1
+  )}/${date.getFullYear()}`
+}
+
 export function formatOneorTwoDigitOnToTwoDigits(thingToFormat: number) {
   if (thingToFormat < 10) {
     return `0${thingToFormat}`

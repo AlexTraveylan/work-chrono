@@ -7,11 +7,19 @@ import { Loader } from '../components/shared/loader'
 export default function ServerSidePage() {
   const { status } = useSession()
 
+  if (status === 'loading') {
+    return (
+      <Layout>
+        <h3>Chargement du profil utilisateur ...</h3>
+        <Loader show={true} />
+      </Layout>
+    )
+  }
+
   return (
     <Layout>
       <div className="flex flex-col justify-center items-center gap-5">
         <h1 className="text-7xl text-center">Work Chrono</h1>
-        {status === 'loading' && <Loader show={true} />}
         <BtnAccesIfLogged />
         <ResumeWeekIfLogged />
       </div>

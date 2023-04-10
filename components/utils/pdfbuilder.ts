@@ -19,6 +19,7 @@ export function generateMonthlyReportPdf(
   session: Session
 ) {
   const doc = new jsPDF()
+  let i_start = 20
 
   // Titre
   const month = weekReview.daysSessions[0].startedAt.toLocaleString('fr-fr', {
@@ -28,13 +29,21 @@ export function generateMonthlyReportPdf(
   doc.text(
     `Bilan du mois de ${month} ${weekReview.daysSessions[0].startedAt.getFullYear()}`,
     50,
-    10
+    i_start
   )
+
+  i_start += 10
 
   // Nombres de jours
   const totalDays = weekReview.daysSessions.length
   doc.setFontSize(12)
-  doc.text(`${weekSessions.length} semaines pour ${totalDays} jours`, 80, 20)
+  doc.text(
+    `${weekSessions.length} semaines pour ${totalDays} jours`,
+    80,
+    i_start
+  )
+
+  i_start += 10
 
   // Présence total
   const totalTime = weekReview.daysSessions.reduce((acc, curr) => {
@@ -53,8 +62,10 @@ export function generateMonthlyReportPdf(
       formatedTotalTime.hour
     }h${formatOneorTwoDigitOnToTwoDigits(formatedTotalTime.minute)}`,
     20,
-    30
+    i_start
   )
+
+  i_start += 10
 
   // Pauses total
   const pauseTotal = weekReview.pausesSessions.reduce((acc, curr) => {
@@ -73,8 +84,10 @@ export function generateMonthlyReportPdf(
       formatedPausesTime.hour
     }h${formatOneorTwoDigitOnToTwoDigits(formatedPausesTime.minute)}`,
     20,
-    40
+    i_start
   )
+
+  i_start += 15
 
   // Heures travaillées
   const formatedTotalWorked = get_total_hours_and_minutes_from_timeStamp(
@@ -88,7 +101,7 @@ export function generateMonthlyReportPdf(
   }h${formatOneorTwoDigitOnToTwoDigits(formatedTotalWorked.minute)}`
   const textWidth = doc.getTextWidth(encadrerText)
   const x = 95
-  const y = 55
+  const y = i_start
   const padding = 2
 
   // Dessinez un rectangle avec des coins arrondis autour du texte
@@ -105,13 +118,15 @@ export function generateMonthlyReportPdf(
   doc.text(encadrerText, x, y)
   doc.setTextColor(0, 0, 0)
 
+  i_start += 15
+
   // 1er titre
   doc.setFontSize(18)
-  doc.text('Heures pour chaque semaine', 70, 70)
+  doc.text('Heures pour chaque semaine', 70, i_start)
   doc.setFontSize(12)
 
   // Heures par semaines.
-  let i_start = 80
+  i_start += 10
   let weekIndex = 1
   for (const week of weekSessions) {
     const totalWeekTime = week.daysSessions.reduce((acc, curr) => {
@@ -146,6 +161,10 @@ export function generateMonthlyReportPdf(
       i_start += 10
     }
     weekIndex += 1
+  }
+
+  if (weekIndex % 2 == 1) {
+    i_start += 10
   }
 
   // heures total par taches calculs
@@ -191,6 +210,8 @@ export function generateMonthlyReportPdf(
     }
   }
 
+  i_start += 10
+
   // 2eme titre
   doc.setFontSize(18)
   doc.text('Détails pour chaque tâche', 70, i_start)
@@ -204,6 +225,8 @@ export function generateMonthlyReportPdf(
     doc.text(`Tâche ${task.label} : ${task.totaltime}`, 20, i_start)
     i_start += 8
   }
+
+  i_start += 7
 
   // 3eme titre
   doc.setFontSize(18)
@@ -254,10 +277,22 @@ export function generateMonthlyReportPdf(
   // crédit
   doc.text('https://work-chrono.vercel.app/', 140, 290)
 
+  // date
+  const now = new Date()
+  doc.text(
+    `${formatOneorTwoDigitOnToTwoDigits(
+      now.getDate()
+    )} / ${formatOneorTwoDigitOnToTwoDigits(
+      now.getMonth() + 1
+    )} / ${now.getFullYear()}`,
+    95,
+    290
+  )
+
   // utilisateur
   if (session.user?.name && session.user?.email) {
-    doc.text(`${session.user.name}`, 10, 285)
-    doc.text(`${session.user.email}`, 10, 290)
+    doc.text(`${session.user.name}`, 20, 285)
+    doc.text(`${session.user.email}`, 20, 290)
   }
 
   return doc

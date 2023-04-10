@@ -9,10 +9,8 @@ export default function ResumeWeekIfLogged() {
     <>
       {session && (
         <div className="flex flex-col gap-3 items-center my-3 text-center">
-          <Link href="/week-review">Résumé de la semaine</Link>
-          <Link href="/previous-week-review">
-            Résumé de la semaine précédente
-          </Link>
+          <Link href="/week-review/0">Résumé de la semaine</Link>
+          <Link href="/week-review/1">Résumé de la semaine précédente</Link>
           <Link href="/settingtask">
             <svg
               width="40"

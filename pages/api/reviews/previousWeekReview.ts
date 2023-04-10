@@ -13,13 +13,14 @@ export default async function handler(
   const dService = new DaySessionService()
   const uService = new UserAppService()
 
-  if (session?.user?.email) {
+  if (session?.user?.email && req.method === 'POST') {
+    const { week } = JSON.parse(req.body)
     const currentUser = await uService.getUserAppByEmail(session.user.email)
     if (currentUser?.id) {
       const daysLogged =
         await dService.getAllDaySessionsForUserFor_n_previousWeek(
           currentUser.id,
-          1
+          week
         )
       return res.status(200).json(daysLogged)
     } else {

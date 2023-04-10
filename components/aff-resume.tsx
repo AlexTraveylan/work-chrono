@@ -1,12 +1,44 @@
-import { days, formatOneorTwoDigitOnToTwoDigits } from './shared/format'
+import { useEffect, useState } from 'react'
+import { AffTestTask } from '../testdata/models/AffTestTask'
+import {
+  days,
+  formatOneorTwoDigitOnToTwoDigits,
+  get_total_hours_and_minutes_from_timeStamp,
+} from './shared/format'
 
 export function AffResume({
   startedAt,
   endedAt,
+  daySessionId,
 }: {
   startedAt: string
   endedAt: string
+  daySessionId: number
 }) {
+  const [timePauses, setTimePauses] = useState<number>(0)
+
+  async function recupPause(daySessionId: number) {
+    const response = await fetch(`/api/reviews/pauseReview`, {
+      method: 'POST',
+      body: JSON.stringify({ daySessionId: daySessionId }),
+    })
+
+    if (response.ok) {
+      const data: { pauses: AffTestTask[] } = await response.json()
+      const timePauses = data.pauses.reduce((acc, curr) => {
+        const localPauseStartedAt = new Date(curr.startedAt).getTime()
+        const localPauseEndedAt = new Date(curr.endedAt).getTime()
+        return acc + (localPauseEndedAt - localPauseStartedAt)
+      }, 0)
+
+      setTimePauses(timePauses)
+    }
+  }
+
+  useEffect(() => {
+    recupPause(daySessionId)
+  }, [])
+
   // Conversion des Dates venant la bdd qui sont en string en Date
   const startOnFormatDate = new Date(startedAt)
   const endOnFormatDate = new Date(endedAt)
@@ -24,10 +56,9 @@ export function AffResume({
   // Format le mois pour afficher toujours 2 chiffres
   const realNumberMonth = formatOneorTwoDigitOnToTwoDigits(month)
   // Obtenir l'heure du debut et de fin
-  const startHour = formatOneorTwoDigitOnToTwoDigits(
-    startOnFormatDate.getHours()
-  )
-  const endHour = formatOneorTwoDigitOnToTwoDigits(endOnFormatDate.getHours())
+  const startHour = startOnFormatDate.getHours()
+
+  const endHour = endOnFormatDate.getHours()
   // Obtenir les minutes du debut et de fin
   const startMinutes = formatOneorTwoDigitOnToTwoDigits(
     startOnFormatDate.getMinutes()
@@ -36,12 +67,13 @@ export function AffResume({
     endOnFormatDate.getMinutes()
   )
 
+  // Calcul du temps de pauses
   // Calcul du temps de travail de la journée et formatage.
-  const diffInMs = endOnFormatDate.getTime() - startOnFormatDate.getTime()
-  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60))
-  const realDiffHours = formatOneorTwoDigitOnToTwoDigits(diffInHours)
-  const diffInMinutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60))
-  const realDiffMinutes = formatOneorTwoDigitOnToTwoDigits(diffInMinutes)
+  const diffInMs = get_total_hours_and_minutes_from_timeStamp(
+    endOnFormatDate.getTime() - startOnFormatDate.getTime() - timePauses
+  )
+  const realDiffHours = formatOneorTwoDigitOnToTwoDigits(diffInMs.hour)
+  const realDiffMinutes = formatOneorTwoDigitOnToTwoDigits(diffInMs.minute)
 
   return (
     <div className="flex flex-col items-start shadow-md rounded p-3 gap-3">

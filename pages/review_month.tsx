@@ -49,7 +49,14 @@ export default function ReviewMonth() {
       method: 'POST',
       body: JSON.stringify({ nb_month_back: nb_month_back }),
     })
-    //TODO 1 doit etre une variable
+
+    // initialisation des objets a remplir
+    const weekSessionsTemp: WeekReview[] = []
+    const totalMonthTemp: WeekReview = {
+      daysSessions: [],
+      pausesSessions: [],
+      tasksSessions: [],
+    }
 
     if (response.ok) {
       const data: WeekReviewAPI[] = await response.json()
@@ -95,22 +102,20 @@ export default function ReviewMonth() {
           tasksSessions: currentWeekTaskSessions,
         }
 
-        setWeekSessions((curr) => [...curr, currentWeekReview])
-        setTotalMonth((prevTotalMonth) => ({
-          daysSessions: [
-            ...prevTotalMonth.daysSessions,
-            ...currentWeekReview.daysSessions,
-          ],
-          pausesSessions: [
-            ...prevTotalMonth.pausesSessions,
-            ...currentWeekReview.pausesSessions,
-          ],
-          tasksSessions: [
-            ...prevTotalMonth.tasksSessions,
-            ...currentWeekReview.tasksSessions,
-          ],
-        }))
+        weekSessionsTemp.push(currentWeekReview)
+
+        totalMonthTemp.daysSessions = totalMonthTemp.daysSessions.concat(
+          currentWeekReview.daysSessions
+        )
+        totalMonthTemp.pausesSessions = totalMonthTemp.pausesSessions.concat(
+          currentWeekReview.pausesSessions
+        )
+        totalMonthTemp.tasksSessions = totalMonthTemp.tasksSessions.concat(
+          currentWeekReview.tasksSessions
+        )
       }
+      setWeekSessions(weekSessionsTemp)
+      setTotalMonth(totalMonthTemp)
     }
     setIsLoading(false)
   }
@@ -150,19 +155,30 @@ export default function ReviewMonth() {
       <ReturnButton path="/" />
       <div className="flex flex-row gap-3 my-3">
         <div onClick={() => setNb_month_back(2)}>
-          <ButtonApp>2 Mois en arriere</ButtonApp>
+          <ButtonApp>Antépénultième</ButtonApp>
         </div>
         <div onClick={() => setNb_month_back(1)}>
-          <ButtonApp>Mois précédent</ButtonApp>
+          <ButtonApp>Précédent</ButtonApp>
         </div>
         <div onClick={() => setNb_month_back(0)}>
-          <ButtonApp>Mois en cours</ButtonApp>
+          <ButtonApp>En cours</ButtonApp>
         </div>
       </div>
       {totalMonth && totalMonth.daysSessions.length > 1 && (
         <div className="my-3 flex flex-col gap-3 items-center">
           <h1 className="text-4xl text-center font-semibold text-purple-800">
-            Bilan du mois
+            Bilan du{' '}
+            {nb_month_back === 0 ? (
+              <span>mois en cours</span>
+            ) : (
+              <>
+                {nb_month_back === 1 ? (
+                  <span>mois précédent</span>
+                ) : (
+                  <span>mois antépénultième</span>
+                )}
+              </>
+            )}
           </h1>
           <ReviewWeekCard
             key={-1}

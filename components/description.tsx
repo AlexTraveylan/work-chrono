@@ -25,7 +25,7 @@ export function Description() {
     description_5,
   ]
   return (
-    <div className="mx-3 flex flex-col w-[60%] shadow p-3">
+    <div className="mx-3 flex flex-col md:w-[60%] shadow p-3">
       {isDescrHidden ? (
         <h3 className="text-center" onClick={() => toggleDescr()}>
           Voir description

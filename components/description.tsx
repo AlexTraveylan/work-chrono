@@ -12,7 +12,7 @@ export function Description() {
   const description_2: string =
     "Inutile de créer un compte, connectez-vous avec votre compte google, seulement les informations indispensables sont utilisées par l'application : votre email, et votre nom. Aucune donnée est stockée. Cela vous permet de commencer votre journée à pointer sur un ordinateur et reprendre la session sur votre téléphone ou votre tablette."
   const description_3: string =
-    "Avec Work-chrono, vous pouvez créer vos taches ou projets, et ainsi avoir un récapitulatif du temps passé pour chacun d'entre elle pour facturer vos clients précisemment."
+    "Avec Work-chrono, vous pouvez créer vos taches ou projets, et ainsi avoir un récapitulatif du temps passé pour chacune d'entre elle pour facturer vos clients précisemment."
   const description_4: string =
     'Vous avez accès à vos récapitulatifs pour optimiser votre temps, et optimiser vos habitudes de travail.'
   const description_5: string =

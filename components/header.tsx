@@ -67,7 +67,26 @@ export default function Header() {
         <>
           <div className="flex flex-row justify-between items-center gap-5 flex-wrap h-24 px-3">
             <Link className="min-w-[20%]" href="/">
-              <h3>Logo</h3>
+              <h3>
+                {' '}
+                <svg
+                  width="38px"
+                  height="38px"
+                  strokeWidth="1.3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  color="#000000"
+                >
+                  <path
+                    d="M9 2h6M12 10v4M12 22a8 8 0 100-16 8 8 0 000 16z"
+                    stroke="#000000"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                </svg>
+              </h3>
             </Link>
             <div className="hidden flex-col items-center sm:flex">
               <p>Connecté en tant que :</p>

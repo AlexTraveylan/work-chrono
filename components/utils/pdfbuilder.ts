@@ -163,7 +163,7 @@ export function generateMonthlyReportPdf(
     weekIndex += 1
   }
 
-  if (weekIndex % 2 == 1) {
+  if (weekIndex % 2 == 0) {
     i_start += 10
   }
 

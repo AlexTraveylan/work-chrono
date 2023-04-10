@@ -58,6 +58,15 @@ export function ReviewWeekCard({
     totalPausesInMilliseconds
   )
 
+  const getTotalWorkWithPauseFormated =
+    get_total_hours_and_minutes_from_timeStamp(
+      totalTimeWorkInMilliseconds - totalPausesInMilliseconds
+    )
+
+  const realWorkTimeFormated = `${
+    getTotalWorkWithPauseFormated.hour
+  }h${formatOneorTwoDigitOnToTwoDigits(getTotalWorkWithPauseFormated.minute)}`
+
   const pauseFormated: FormatedLabelSession = {
     label: 'Pauses',
     totaltime: `${
@@ -122,11 +131,14 @@ export function ReviewWeekCard({
       </h1>
       <div className="flex flex-row flex-wrap items-center justify-center gap-3">
         <h2 className="text-xl rounded shadow p-3 my-3">
-          Total : {weekFormated.totaltime}
+          Présence : {weekFormated.totaltime}
         </h2>
         <h2 className="text-xl rounded shadow p-3 my-3">
           Pauses : {pauseFormated.totaltime}
         </h2>
+      </div>
+      <div>
+        <h2 className="text-3xl my-4 text-pink-800">{realWorkTimeFormated}</h2>
       </div>
       <div className="flex flex-col items-center">
         <h2 className="text-xl font-semibold">Taches</h2>

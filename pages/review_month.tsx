@@ -45,6 +45,7 @@ export default function ReviewMonth() {
 
   async function fetchDaySession() {
     setIsLoading(true)
+    const current_nb_month_back = nb_month_back
     const response = await fetch(`/api/reviews/monthReview`, {
       method: 'POST',
       body: JSON.stringify({ nb_month_back: nb_month_back }),
@@ -62,30 +63,31 @@ export default function ReviewMonth() {
       const data: WeekReviewAPI[] = await response.json()
 
       for (const datum of data) {
-        const currentWeekDaySessions: DaySession[] = datum.daysSessions.map(
-          (day) => {
+        const currentWeekDaySessions: DaySession[] = datum.daysSessions
+          .filter((data) => data.endedAt && data.endedAt > data.startedAt)
+          .map((day) => {
             return {
               id: day.id,
               startedAt: new Date(day.startedAt),
               endedAt: new Date(day.endedAt),
               userId: day.userId,
             }
-          }
-        )
+          })
 
-        const currentWeekPausesSessions: Pause[] = datum.pausesSessions.map(
-          (pause) => {
+        const currentWeekPausesSessions: Pause[] = datum.pausesSessions
+          .filter((data) => data.endedAt && data.endedAt > data.startedAt)
+          .map((pause) => {
             return {
               id: pause.id,
               startedAt: new Date(pause.startedAt),
               endedAt: new Date(pause.endedAt),
               daySessionId: pause.daySessionId,
             }
-          }
-        )
+          })
 
-        const currentWeekTaskSessions: TaskSession[] = datum.tasksSessions.map(
-          (task) => {
+        const currentWeekTaskSessions: TaskSession[] = datum.tasksSessions
+          .filter((data) => data.endedAt && data.endedAt > data.startedAt)
+          .map((task) => {
             return {
               id: task.id,
               startedAt: new Date(task.startedAt),
@@ -93,8 +95,7 @@ export default function ReviewMonth() {
               endedAt: new Date(task.endedAt),
               daySessionId: task.daySessionId,
             }
-          }
-        )
+          })
 
         const currentWeekReview: WeekReview = {
           daysSessions: currentWeekDaySessions,
@@ -104,18 +105,13 @@ export default function ReviewMonth() {
 
         weekSessionsTemp.push(currentWeekReview)
 
-        totalMonthTemp.daysSessions = totalMonthTemp.daysSessions.concat(
-          currentWeekReview.daysSessions
-        )
-        totalMonthTemp.pausesSessions = totalMonthTemp.pausesSessions.concat(
-          currentWeekReview.pausesSessions
-        )
-        totalMonthTemp.tasksSessions = totalMonthTemp.tasksSessions.concat(
-          currentWeekReview.tasksSessions
-        )
+        totalMonthTemp.daysSessions.push(...currentWeekReview.daysSessions)
+        totalMonthTemp.pausesSessions.push(...currentWeekReview.pausesSessions)
+        totalMonthTemp.tasksSessions.push(...currentWeekReview.tasksSessions)
       }
       setWeekSessions(weekSessionsTemp)
       setTotalMonth(totalMonthTemp)
+      setNb_month_back(current_nb_month_back)
     }
     setIsLoading(false)
   }
@@ -200,14 +196,16 @@ export default function ReviewMonth() {
             </h1>
             <div className="flex flex-row justify-center gap-3 my-3 flex-wrap">
               {weekSessions.map((week) => {
-                return (
-                  <ReviewWeekCard
-                    key={week.daysSessions[0].id}
-                    daysSession={week.daysSessions}
-                    pausesSession={week.pausesSessions}
-                    tasksSession={week.tasksSessions}
-                  />
-                )
+                if (week.daysSessions.length > 0) {
+                  return (
+                    <ReviewWeekCard
+                      key={week.daysSessions[0].id}
+                      daysSession={week.daysSessions}
+                      pausesSession={week.pausesSessions}
+                      tasksSession={week.tasksSessions}
+                    />
+                  )
+                }
               })}
             </div>
           </>

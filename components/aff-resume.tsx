@@ -52,7 +52,7 @@ export function AffResume({
   // Obtenir l'année
   const year = startOnFormatDate.getFullYear()
   // Obtenir le nom du mois en français
-  const month = startOnFormatDate.getMonth()
+  const month = startOnFormatDate.getMonth() + 1
   // Format le mois pour afficher toujours 2 chiffres
   const realNumberMonth = formatOneorTwoDigitOnToTwoDigits(month)
   // Obtenir l'heure du debut et de fin
@@ -72,7 +72,7 @@ export function AffResume({
   const diffInMs = get_total_hours_and_minutes_from_timeStamp(
     endOnFormatDate.getTime() - startOnFormatDate.getTime() - timePauses
   )
-  const realDiffHours = formatOneorTwoDigitOnToTwoDigits(diffInMs.hour)
+  const realDiffHours = diffInMs.hour
   const realDiffMinutes = formatOneorTwoDigitOnToTwoDigits(diffInMs.minute)
 
   return (

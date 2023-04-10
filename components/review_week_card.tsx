@@ -117,19 +117,19 @@ export function ReviewWeekCard({
 
   return (
     <div className="flex flex-col items-center rounded shadow-md p-3">
-      <h1 className="text-3xl text-center">
+      <h1 className="text-xl text-center">
         Du {weekFormated.begin} au {weekFormated.end}
       </h1>
       <div className="flex flex-row flex-wrap items-center justify-center gap-3">
-        <h2 className="text-2xl rounded shadow-md p-3 my-3">
+        <h2 className="text-xl rounded shadow p-3 my-3">
           Total : {weekFormated.totaltime}
         </h2>
-        <h2 className="text-2xl rounded shadow-md p-3 my-3">
+        <h2 className="text-xl rounded shadow p-3 my-3">
           Pauses : {pauseFormated.totaltime}
         </h2>
       </div>
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-bold">Taches</h2>
+        <h2 className="text-xl font-semibold">Taches</h2>
         <div className="flex flex-col items-center">
           {taskFormatedDict.map((task) => {
             return (

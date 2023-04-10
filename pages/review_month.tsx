@@ -161,7 +161,7 @@ export default function ReviewMonth() {
       </div>
       {totalMonth && totalMonth.daysSessions.length > 1 && (
         <div className="my-3 flex flex-col gap-3 items-center">
-          <h1 className="text-4xl text-center font-bold text-purple-800">
+          <h1 className="text-4xl text-center font-semibold text-purple-800">
             Bilan du mois
           </h1>
           <ReviewWeekCard
@@ -179,7 +179,7 @@ export default function ReviewMonth() {
       <div className="my-3 min-h-[70vh]">
         {weekSessions.length > 0 ? (
           <>
-            <h1 className="text-4xl text-center font-bold text-purple-800">
+            <h1 className="text-4xl text-center font-semibold text-purple-800">
               Bilan par semaines
             </h1>
             <div className="flex flex-row justify-center gap-3 my-3 flex-wrap">

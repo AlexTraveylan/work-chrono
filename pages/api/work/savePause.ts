@@ -37,6 +37,12 @@ export default async function handler(
           // Mise à jour de la pause avec la date et l'heure actuelles
           await pService.updatePause({ ...currentPause, endedAt: new Date() })
 
+          try {
+            pService.deleteAllNullEndedPausesByEmail(session.user.email)
+          } catch {
+            console.error('echec delete pause')
+          }
+
           // Envoi de la réponse avec succès
           return res.status(200).json({ message: 'Pause sauvegardée' })
         } else {

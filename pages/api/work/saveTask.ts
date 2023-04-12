@@ -35,6 +35,12 @@ export default async function handler(
           endedAt: new Date(),
         })
 
+        try {
+          tService.deleteAllNullEndedTaskSessionsByEmail(session.user.email)
+        } catch {
+          console.error('echec delete taches')
+        }
+
         // Envoyer une réponse avec un message de succès
         return res
           .status(200)

@@ -93,20 +93,26 @@ export default function WeekReview({ week }: { week: string }) {
       )}
       <div className="flex flex-row gap-3 flex-wrap justify-center">
         {daySessionData &&
-          daySessionData.map((daySession) => (
-            <div key={daySession.id}>
-              <AffResume
-                daySessionId={daySession.id}
-                startedAt={daySession.startedAt}
-                endedAt={daySession.endedAt}
-              />
-              <DailyPlanner
-                daySessionId={daySession.id}
-                startedAt={daySession.startedAt}
-                endedAt={daySession.endedAt}
-              />
-            </div>
-          ))}
+          daySessionData
+            .sort(
+              (a, b) =>
+                new Date(a.startedAt).getTime() -
+                new Date(b.startedAt).getTime()
+            )
+            .map((daySession) => (
+              <div key={daySession.id}>
+                <AffResume
+                  daySessionId={daySession.id}
+                  startedAt={daySession.startedAt}
+                  endedAt={daySession.endedAt}
+                />
+                <DailyPlanner
+                  daySessionId={daySession.id}
+                  startedAt={daySession.startedAt}
+                  endedAt={daySession.endedAt}
+                />
+              </div>
+            ))}
       </div>
     </Layout>
   )

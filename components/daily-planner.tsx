@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AffTestTask } from '../testdata/models/AffTestTask'
+import { AreaPlanning } from './area-planing'
 import { get_height_from, get_top_from_startedAt } from './shared/format'
 
 export function DailyPlanner({
@@ -63,7 +64,7 @@ export function DailyPlanner({
         className="bg-stone-400 z-10 absolute w-full rounded"
         style={{ height: `${sizeDay}%`, top: `${beginDay}%` }}
       ></div>
-      {pauses.length > 0 && tasks.length > 0 && (
+      {[...pauses, ...tasks].length > 0 && (
         <div className="h-full">
           {[...pauses, ...tasks]
             .sort(
@@ -72,6 +73,7 @@ export function DailyPlanner({
                 new Date(b.startedAt).getTime()
             )
             .map((elem) => {
+              console.log(elem)
               const sizeElem = get_height_from(
                 new Date(elem.startedAt).getTime(),
                 new Date(elem.endedAt).getTime()
@@ -81,15 +83,11 @@ export function DailyPlanner({
                 new Date(elem.startedAt).getTime()
               )
               return (
-                <div
-                  key={elem.startedAt}
-                  style={{ height: `${sizeElem}%`, top: `${begin}%` }}
-                  className={`absolute  ${
-                    elem.label === 'Pause' ? 'bg-slate-50' : 'bg-lime-400'
-                  } w-[90%] left-[5%] rounded text-center border border-solid border-cyan-900 truncate flex justify-center items-center z-20`}
-                >
-                  {elem.label}
-                </div>
+                <AreaPlanning
+                  sizeElem={sizeElem}
+                  begin={begin}
+                  taskOrpause={elem}
+                />
               )
             })}
         </div>

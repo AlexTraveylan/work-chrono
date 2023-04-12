@@ -33,12 +33,20 @@ export default async function handler(
 
     if (daysessions && daysessions.length > 0) {
       const weeks: WeekReview[] = []
-      const firstWeekStart = startOfWeek(daysessions[0].startedAt, {
-        weekStartsOn: 1,
-      })
+      const firstWeekStart = startOfWeek(
+        daysessions.sort(
+          (a, b) => a.startedAt.getTime() - b.startedAt.getTime()
+        )[0].startedAt,
+        {
+          weekStartsOn: 1,
+        }
+      )
 
       let currentWeekStart = firstWeekStart
       let currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 })
+
+      console.log(currentWeekStart)
+      console.log(currentWeekEnd)
 
       while (
         currentWeekStart <= daysessions[daysessions.length - 1].startedAt

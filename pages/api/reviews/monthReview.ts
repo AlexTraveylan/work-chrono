@@ -45,9 +45,6 @@ export default async function handler(
       let currentWeekStart = firstWeekStart
       let currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 })
 
-      console.log(currentWeekStart)
-      console.log(currentWeekEnd)
-
       while (
         currentWeekStart <= daysessions[daysessions.length - 1].startedAt
       ) {

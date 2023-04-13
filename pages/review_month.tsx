@@ -151,13 +151,13 @@ export default function ReviewMonth() {
       <ReturnButton path="/" />
       <div className="flex flex-row gap-3 my-3">
         <div onClick={() => setNb_month_back(2)}>
-          <ButtonApp>Antépénultième</ButtonApp>
+          <ButtonApp>2</ButtonApp>
         </div>
         <div onClick={() => setNb_month_back(1)}>
-          <ButtonApp>Précédent</ButtonApp>
+          <ButtonApp>1</ButtonApp>
         </div>
         <div onClick={() => setNb_month_back(0)}>
-          <ButtonApp>En cours</ButtonApp>
+          <ButtonApp>0</ButtonApp>
         </div>
       </div>
       {totalMonth && totalMonth.daysSessions.length > 1 && (

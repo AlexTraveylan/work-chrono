@@ -49,17 +49,17 @@ export function TimerApp({
     <>
       {BeginTimeStamp && timer && (
         <div className="p-3">
-          <h3 className="font-bold mb-3 text-center">{title}</h3>
+          <h3 className="font-semibold mb-3 text-center">{title}</h3>
           <div className="flex flex-row gap-3">
-            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md">
+            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md ">
               <h5 className="font-semibold">Heures</h5>
               <p>{timer.hours}</p>
             </div>
-            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md">
+            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md ">
               <h5 className="font-semibold">Minutes</h5>
               <p>{timer.minutes}</p>
             </div>
-            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md">
+            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md ">
               <h5 className="font-semibold">Secondes</h5>
               <p>{timer.secondes}</p>
             </div>

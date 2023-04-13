@@ -87,7 +87,7 @@ export function StartDay({
   return (
     <>
       {beginSession ? (
-        <div className="flex flex-row gap-3 flex-wrap items-center justify-center">
+        <div className="flex flex-col gap-3 flex-wrap items-center justify-center">
           <div onClick={() => endWork()}>
             <ButtonApp>Finir et sauvegarder la journée</ButtonApp>
           </div>
@@ -96,6 +96,7 @@ export function StartDay({
               {/* Bouton Reprendre */}
               <ButtonApp>
                 <svg
+                  className="hover:scale-110 ease-in duration-100"
                   width="23"
                   height="23"
                   fill="none"
@@ -115,6 +116,7 @@ export function StartDay({
               {/* Bouton pause */}
               <ButtonApp>
                 <svg
+                  className="hover:scale-110 ease-in duration-100"
                   width="23"
                   height="23"
                   fill="none"
@@ -145,11 +147,21 @@ export function StartDay({
               onClick={() => beginWork()}
               className="flex flex-col gap-3 items-center"
             >
-              <ButtonApp>
-                {isDaySession ? 'Nouvelle session' : 'Démarrer une session'}
-              </ButtonApp>
+              {isDaySession ? (
+                <ButtonApp>
+                  <span className="text-red-900">Nouvelle session</span>
+                </ButtonApp>
+              ) : (
+                <ButtonApp>
+                  <span className="text-green-950">Démarrer une session</span>
+                </ButtonApp>
+              )}
 
-              {!isDaySession && <h4>Aucune session en cours detectée</h4>}
+              {!isDaySession && (
+                <h4 className="text-red-800">
+                  Aucune session en cours detectée
+                </h4>
+              )}
             </div>
           )}
         </>

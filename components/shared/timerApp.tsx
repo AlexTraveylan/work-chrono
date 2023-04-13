@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { FakeTimer } from '../../testdata/models/FakeTimer'
 import { formatOneorTwoDigitOnToTwoDigits } from './format'
 
 export function TimerApp({
@@ -9,7 +8,11 @@ export function TimerApp({
   title: string
   BeginTimeStamp: number | undefined
 }) {
-  const [timer, setTimer] = useState<FakeTimer>()
+  const [timer, setTimer] = useState<{
+    hours: string
+    minutes: string
+    secondes: string
+  }>()
   const [isRunning, setIsRunning] = useState(true)
 
   useEffect(() => {
@@ -24,9 +27,9 @@ export function TimerApp({
         const seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
         setTimer({
-          hours: hours,
-          minutes: minutes,
-          secondes: seconds,
+          hours: formatOneorTwoDigitOnToTwoDigits(hours),
+          minutes: formatOneorTwoDigitOnToTwoDigits(minutes),
+          secondes: formatOneorTwoDigitOnToTwoDigits(seconds),
         })
       }, 1000)
     }
@@ -45,20 +48,20 @@ export function TimerApp({
   return (
     <>
       {BeginTimeStamp && timer && (
-        <div className="p-3 rounded-md shadow-md">
+        <div className="p-3">
           <h3 className="font-bold mb-3 text-center">{title}</h3>
           <div className="flex flex-row gap-3">
-            <div className="flex flex-col items-center justify-center bg-cyan-200 p-2 min-w-[5rem] rounded shadow-md">
-              <h5 className="font-bold">Heures</h5>
-              <p>{formatOneorTwoDigitOnToTwoDigits(timer.hours)}</p>
+            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md">
+              <h5 className="font-semibold">Heures</h5>
+              <p>{timer.hours}</p>
             </div>
-            <div className="flex flex-col items-center justify-center bg-cyan-200 p-2 min-w-[5rem] rounded shadow-md">
-              <h5 className="font-bold">Minutes</h5>
-              <p>{formatOneorTwoDigitOnToTwoDigits(timer.minutes)}</p>
+            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md">
+              <h5 className="font-semibold">Minutes</h5>
+              <p>{timer.minutes}</p>
             </div>
-            <div className="flex flex-col items-center justify-center bg-cyan-200 p-2 min-w-[5rem] rounded shadow-md">
-              <h5 className="font-bold">Secondes</h5>
-              <p>{formatOneorTwoDigitOnToTwoDigits(timer.secondes)}</p>
+            <div className="flex flex-col items-center justify-center p-2 min-w-[5rem] rounded shadow-md">
+              <h5 className="font-semibold">Secondes</h5>
+              <p>{timer.secondes}</p>
             </div>
           </div>
         </div>

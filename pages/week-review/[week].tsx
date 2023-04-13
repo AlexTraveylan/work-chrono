@@ -78,11 +78,19 @@ export default function WeekReview({ week }: { week: string }) {
     )
   }
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <h3>Récupération des données</h3>
+        <Loader show={isLoading} />
+      </Layout>
+    )
+  }
+
   // If session exists, display content
   return (
     <Layout>
       <ReturnButton path="/" />
-      <Loader show={isLoading} />
       {totalTimeWorkMillisecondsToString && (
         <div className="flex flex-col items-center text-center gap-3 mb-5">
           <h1 className="text-3xl px-3">Nombre d'heures de la semaine : </h1>

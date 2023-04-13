@@ -8,28 +8,45 @@ export default function ResumeWeekIfLogged() {
   return (
     <>
       {session && (
-        <div className="flex flex-col gap-3 items-center my-3 text-center">
-          <Link href="/week-review/0">Résumé de la semaine</Link>
-          <Link href="/week-review/1">Résumé de la semaine précédente</Link>
-          <Link href="/settingtask">
+        <div className="flex flex-col items-center my-3 justify-between">
+          <Link
+            className="h-10 text-gray-500 cursor-pointer hover:scale-110 ease-in duration-100"
+            href="/week-review/0"
+          >
+            Voir cette semaine
+          </Link>
+          <Link
+            className="h-10 text-gray-500 cursor-pointer hover:scale-110 ease-in duration-100"
+            href="/week-review/1"
+          >
+            Voir la semaine précédente
+          </Link>
+          <Link
+            className="h-10 text-gray-500 cursor-pointer hover:scale-110 ease-in duration-100"
+            href="/review_month"
+          >
+            Bilans mensuels
+          </Link>
+          <Link className="h-10" href="/settingtask">
             <svg
-              width="40"
-              height="40"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.3"
+              className="hover:scale-110 ease-in duration-100 my-2"
+              width="34px"
+              height="34px"
+              strokeWidth="1.5"
               viewBox="0 0 24 24"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              color="#000000"
             >
-              <path d="M9 6.75H7.75a2 2 0 0 0-2 2v8.5a2 2 0 0 0 2 2h8.5a2 2 0 0 0 2-2v-8.5a2 2 0 0 0-2-2H15"></path>
-              <path d="M14 8.25h-4a1 1 0 0 1-1-1v-1.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1.5a1 1 0 0 1-1 1Z"></path>
-              <path d="M9.75 12.25h4.5"></path>
-              <path d="M9.75 15.25h4.5"></path>
+              <path
+                d="M22 14V8.5M6 13V6a3 3 0 013-3h5M16.992 4h3m3 0h-3m0 0V1m0 3v3M12 21H6a4 4 0 010-8h12a4 4 0 104 4v-3"
+                stroke="#000000"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></path>
             </svg>
           </Link>
-          <Link href="/review_month">Bilans mensuels</Link>
         </div>
       )}
     </>

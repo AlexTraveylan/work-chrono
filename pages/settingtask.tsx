@@ -48,15 +48,23 @@ export default function ProtectedPage() {
     )
   }
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <h3>Récupération des taches</h3>
+        <Loader show={isLoading} />
+      </Layout>
+    )
+  }
+
   // If session exists, display content
   return (
     <Layout>
       <ReturnButton path="/" />
-      <Loader show={isLoading} />
       <div>
         {tasks && Array.isArray(tasks) && tasks?.length != 0 ? (
           <>
-            <h1 className="text-5xl mb-6 text-center">
+            <h1 className="text-5xl mb-6 text-center hover:scale-110 ease-in duration-100">
               Liste des Tâches ajoutées
             </h1>
             <ul>
@@ -68,7 +76,7 @@ export default function ProtectedPage() {
                   >
                     {task}
                     <svg
-                      className="text-rose-600 cursor-pointer"
+                      className="text-rose-600 cursor-pointer ease-in duration-100 hover:scale-110"
                       onClick={() => deleteTaches(task)}
                       width="22"
                       height="22"

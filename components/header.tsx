@@ -17,6 +17,7 @@ export default function Header() {
           <div className="flex flex-row justify-between items-center gap-5 flex-wrap h-24 px-3">
             <Link href="/">
               <svg
+                className="cursor-pointer ease-in duration-100 hover:scale-110 "
                 width="38px"
                 height="38px"
                 strokeWidth="1.3"
@@ -43,7 +44,7 @@ export default function Header() {
               }}
             >
               <svg
-                className="cursor-pointer"
+                className="cursor-pointer ease-in duration-100 hover:scale-110"
                 width="40"
                 height="40"
                 fill="none"
@@ -70,6 +71,7 @@ export default function Header() {
               <h3>
                 {' '}
                 <svg
+                  className="cursor-pointer ease-in duration-100 hover:scale-110"
                   width="38px"
                   height="38px"
                   strokeWidth="1.3"
@@ -103,7 +105,7 @@ export default function Header() {
               }}
             >
               <svg
-                className="cursor-pointer"
+                className="cursor-pointer ease-in duration-100 hover:scale-110"
                 width="40"
                 height="40"
                 fill="none"

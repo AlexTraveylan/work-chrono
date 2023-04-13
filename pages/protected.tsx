@@ -5,7 +5,7 @@ import Layout from '../components/layout'
 import { ResumeSession } from '../components/resume-session'
 import {
   formatOneorTwoDigitOnToTwoDigits,
-  get_hour_minute_from_timeStamp
+  get_hour_minute_from_timeStamp,
 } from '../components/shared/format'
 import { Loader } from '../components/shared/loader'
 import { ReturnButton } from '../components/shared/return'
@@ -66,6 +66,15 @@ export default function ProtectedPage() {
     )
   }
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <h3>Récupération des données ...</h3>
+        <Loader show={isLoading} />
+      </Layout>
+    )
+  }
+
   if (!session) {
     // If no session exists, display access denied message
     return (
@@ -82,10 +91,19 @@ export default function ProtectedPage() {
       <div className="mb-3">
         <TodayDateTitle />
       </div>
-      {beginSession && <h3 className="text-2xl">Début : {beginToString}</h3>}
-      <div className="flex flex-col items-center">
-        <div className=" flex flex-col gap-3 m-3 flex-wrap justify-center">
-          <Loader show={isLoading} />
+      {beginSession && (
+        <h3 className="text-2xl mb-3">Début : {beginToString}</h3>
+      )}
+      <div className="flex flex-row gap-10 flex-wrap items-start justify-center">
+        <div className=" flex flex-col gap-3 justify-center">
+          {!isPause && (
+            <>
+              <TimerApp
+                title="Temps total du jour"
+                BeginTimeStamp={beginSession}
+              />
+            </>
+          )}
           <StartDay
             isPause={isPause}
             setIsPause={setIsPause}
@@ -106,29 +124,21 @@ export default function ProtectedPage() {
             sessionEndedAt={sessionEndedAt}
           />
         </div>
-      </div>
-      {!isPause && (
-        <>
-          <div className="flex flex-row justify-center gap-3 flex-wrap m-3">
-            <TimerApp
-              title="Temps total du jour"
-              BeginTimeStamp={beginSession}
-            />
+        {!isPause && beginSession && (
+          <div className="flex flex-col gap-3 justify-center">
             <TimerApp
               title={`Tache "${taskName}"`}
               BeginTimeStamp={taskTimer}
             />
-          </div>
-          {beginSession && (
             <StartTask
               taskName={taskName}
               setTaskName={setTaskName}
               taskTimer={taskTimer}
               setTaskTimer={setTaskTimer}
             />
-          )}
-        </>
-      )}
+          </div>
+        )}
+      </div>
     </Layout>
   )
 }

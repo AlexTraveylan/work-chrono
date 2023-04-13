@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ButtonApp } from './shared/buttonApp'
 
 export function Description() {
   const [isDescrHidden, setIsDescrHidden] = useState(true)
@@ -25,16 +26,42 @@ export function Description() {
     description_5,
   ]
   return (
-    <div className="mx-3 flex flex-col md:w-[60%] shadow p-3">
+    <div className="mx-3 flex flex-col items-center md:w-[60%] p-3">
       {isDescrHidden ? (
-        <h3 className="text-center" onClick={() => toggleDescr()}>
-          Voir description
-        </h3>
+        <div className="" onClick={() => toggleDescr()}>
+          <ButtonApp>Voir description</ButtonApp>
+        </div>
       ) : (
         <>
-          <h3 className="text-center" onClick={() => toggleDescr()}>
-            Cacher la description
-          </h3>
+          <div className="" onClick={() => toggleDescr()}>
+            <ButtonApp>
+              <svg
+                className="flex items-center justify-center"
+                width="35px"
+                height="35px"
+                viewBox="0 0 24 24"
+                strokeWidth="1.3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                color="#000000"
+              >
+                <path
+                  d="M4.5 8H15s0 0 0 0 5 0 5 4.706C20 18 15 18 15 18H6.286"
+                  stroke="#000000"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+                <path
+                  d="M7.5 11.5L4 8l3.5-3.5"
+                  stroke="#000000"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+              </svg>
+            </ButtonApp>
+          </div>
           <div className="flex flex-col items-begin justify-center text-center">
             {descriptions.map((desc) => (
               <p className="my-3" key={desc}>

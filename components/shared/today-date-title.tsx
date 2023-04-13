@@ -17,6 +17,6 @@ export function TodayDateTitle() {
 
   // Renvoie un élément h1 avec la date formatée
   return (
-    <h1 className="text-5xl text-center hover:scale-110 ease-in duration-100">{`${day} ${numberDay} ${month} ${year}`}</h1>
+    <h1 className="text-5xl text-center">{`${day} ${numberDay} ${month} ${year}`}</h1>
   )
 }

@@ -19,9 +19,7 @@ export default function ServerSidePage() {
   return (
     <Layout>
       <div className="flex flex-col justify-center items-center gap-5">
-        <h1 className="text-7xl text-center hover:scale-110 ease-in duration-200">
-          Work Chrono
-        </h1>
+        <h1 className="text-7xl text-center">Work Chrono</h1>
         <BtnAccesIfLogged />
         <ResumeWeekIfLogged />
       </div>

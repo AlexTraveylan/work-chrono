@@ -17,8 +17,10 @@ export function AreaPlanning({
       style={{ height: `${sizeElem}%`, top: `${begin}%` }}
       onClick={() => setIsShow(true)}
       className={`absolute cursor-pointer   ${
-        taskOrpause.label === 'Pause' ? 'bg-slate-50' : 'bg-lime-400'
-      } w-[90%] left-[5%] rounded text-center border border-solid border-cyan-900 truncate flex justify-center items-center z-20 hover:border-2`}
+        taskOrpause.label === 'Pause'
+          ? 'bg-black text-white border-white hover:border-2'
+          : 'bg-white border-black hover:border-2'
+      } w-[90%] left-[5%] rounded text-center border border-solid  truncate flex justify-center items-center z-20 `}
     >
       {taskOrpause.label}
       {/* <>

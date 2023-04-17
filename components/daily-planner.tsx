@@ -59,9 +59,9 @@ export function DailyPlanner({
   const beginDay = get_top_from_startedAt(new Date(startedAt).getTime())
 
   return (
-    <div className="h-[28rem] bg-pink-100 my-2 rounded shadow-md relative">
+    <div className="h-[28rem] my-2 rounded shadow-md relative">
       <div
-        className="bg-stone-400 z-10 absolute w-full rounded"
+        className="border-2 border-slate-200 absolute w-full rounded"
         style={{ height: `${sizeDay}%`, top: `${beginDay}%` }}
       ></div>
       {[...pauses, ...tasks].length > 0 && (
